@@ -223,6 +223,27 @@
     }
     .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
 
+    .btn-teal {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal);
+      color: var(--white);
+      font-family: 'Sansation', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-teal:hover { background: var(--teal2); transform: translateY(-1px); }
+    .btn-teal svg { width: 16px; height: 16px; }
+
     /* ── EVENT CARDS ── */
     .hero-right {
       position: relative;
@@ -449,11 +470,18 @@
         Welcome to the Mplify Member Portal, your central resource for engaging with the Mplify ecosystem. Access active projects, working group materials, and an expanding library of member resources, including marketing and brand assets. Designed to support collaboration and execution, the Portal brings together the tools and information you need to stay informed, participate in initiatives, and contribute to the work shaping the AI-powered digital economy.
       </p>
       <div class="hero-ctas">
-        <a href="https://members.mplify.net" class="btn-primary" style="font-family:'Sansation',sans-serif;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          Login to Portal
+        <a href="https://members.mplify.net/s/login/" class="btn-primary" style="font-family:'Sansation',sans-serif;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Login
         </a>
-        <a href="#" class="btn-ghost">Help Center</a>
+        <a href="https://members.mplify.net/s/new-registration" class="btn-teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Register
+        </a>
+        <a href="https://youtu.be/-oR-xB1meSQ" class="btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Video
+        </a>
       </div>
     </div>
 
@@ -524,7 +552,7 @@
           <li><a href="#">Reference Presentations <span class="lock">Member Only</span></a></li>
           <li><a href="#">Educational Resources <span class="lock">Member Only</span></a></li>
           <li><a href="#">Marketing Tools <span class="lock">Member Only</span></a></li>
-          <li><a href="#">Mplify Website</a></li>
+          <li><a href="https://www.mplify.net">Mplify Website</a></li>
         </ul>
       </div>
 
