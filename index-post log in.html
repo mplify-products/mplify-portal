@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mplify Member Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/sansation" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0a1628;
+      --navy2:   #0f2044;
+      --teal:    #00a8b0;
+      --teal2:   #007f86;
+      --orange:  #f26522;
+      --orange2: #c94f12;
+      --silver:  #e8edf5;
+      --muted:   #6b7a96;
+      --white:   #ffffff;
+      --card-bg: #111e36;
+      --border:  rgba(255,255,255,0.07);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: #2b2d42;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .topnav {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .topnav a {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .topnav a:hover { color: var(--teal); }
+
+    /* ── USER MENU ── */
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .user-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .user-name {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .user-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      background: #1a2540;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      min-width: 160px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .user-menu:hover .user-dropdown { display: block; }
+
+    .user-dropdown a {
+      display: block;
+      padding: 10px 16px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      text-transform: none;
+      letter-spacing: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+    .user-dropdown a:hover { background: rgba(255,255,255,0.05); color: var(--white); }
+    .user-dropdown .logout { color: #ff6b6b; border-top: 1px solid var(--border); }
+    .user-dropdown .logout:hover { color: #ff4444; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 28px 40px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 10% 50%, rgba(0,168,176,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 90% 20%, rgba(242,101,34,0.07) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-greeting {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--teal);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Sansation', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 10px;
+      animation: fadeUp 0.5s 0.08s ease both;
+    }
+    .hero h1 .accent { color: var(--teal); }
+
+    .hero-sub {
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      animation: fadeUp 0.5s 0.16s ease both;
+    }
+
+    /* ── EVENT CARDS ── */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+
+    .event-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .event-card:hover { border-color: var(--teal); transform: translateX(-3px); }
+
+    .event-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      width: fit-content;
+    }
+    .tag-workday { background: rgba(0,168,176,0.2); color: var(--teal); }
+    .tag-summit  { background: rgba(242,101,34,0.2); color: var(--orange); }
+
+    .event-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--white);
+    }
+
+    .event-sub {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .event-date {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--teal);
+      margin-top: 2px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 0 40px;
+    }
+
+    /* ── NAV SECTIONS ── */
+    .nav-sections {
+      padding: 20px 40px 60px;
+    }
+
+    .nav-sections-title {
+      font-family: 'Sansation', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .section-col {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 20px;
+      transition: border-color 0.25s, transform 0.2s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .section-col:hover { border-color: var(--teal); transform: translateY(-4px); }
+
+    .section-col:nth-child(1) { animation-delay: 0.05s; }
+    .section-col:nth-child(2) { animation-delay: 0.10s; }
+    .section-col:nth-child(3) { animation-delay: 0.15s; }
+    .section-col:nth-child(4) { animation-delay: 0.20s; }
+    .section-col:nth-child(5) { animation-delay: 0.25s; }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-get    { background: rgba(0,168,176,0.15); color: var(--teal); }
+    .icon-part   { background: rgba(242,101,34,0.15); color: var(--orange); }
+    .icon-learn  { background: rgba(255,200,80,0.12); color: #ffc850; }
+    .icon-net    { background: rgba(120,200,120,0.12); color: #78c878; }
+    .icon-conn   { background: rgba(180,120,255,0.12); color: #b478ff; }
+    .section-icon svg { width: 16px; height: 16px; }
+
+    .section-heading {
+      font-family: 'Sansation', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .section-links li a {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      transition: color 0.2s;
+      line-height: 1.4;
+    }
+    .section-links li a:hover { color: var(--white); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--navy2);
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 14px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .social-link:hover { color: var(--teal); }
+    .social-link svg { width: 14px; height: 14px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="logo">
+      <img src="https://www.mplify.net/Assets/Logos/Mplify-Logo-Stacked-white.svg" alt="Mplify" style="height:44px;width:auto;" />
+    </div>
+    <nav>
+      <ul class="topnav">
+        <li><a href="https://members.mplify.net/s/recordlist/Project__c/00BUI00000DWBth2AH?Project__c-filterId=Active_Projects">Projects</a></li>
+        <li><a href="https://www.mplify.net/learn/technical-standards-sdks/">Standards</a></li>
+        <li><a href="https://www.mplify.net/engage/connect/">Events</a></li>
+        <li><a href="https://members.mplify.net">Help</a></li>
+        <!-- User menu replaces Login button -->
+        <li>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+            <span class="user-name">Jane Doe</span>
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            <div class="user-dropdown">
+              <a href="#">My Profile</a>
+              <a href="#">Account Settings</a>
+              <a href="#" class="logout">Log Out</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-greeting">Welcome back</p>
+      <h1><span class="accent">Jane</span></h1>
+    </div>
+
+    <div class="hero-right">
+      <a href="https://gne.mplify.net/member-workdays/" class="event-card">
+        <span class="event-tag tag-workday">Upcoming</span>
+        <div class="event-title">Member Workdays</div>
+        <div class="event-sub">Co-located with Mplify Member Summit EMEA</div>
+        <div class="event-date">📍 8–9 June · Lisbon, Portugal</div>
+      </a>
+      <a href="https://gne.mplify.net/mplify-member-summit-emea/" class="event-card">
+        <span class="event-tag tag-summit">Global NaaS Event</span>
+        <div class="event-title">Mplify Member Summit EMEA</div>
+        <div class="event-sub">A Global NaaS Event</div>
+        <div class="event-date">📍 9–11 June · Lisbon, Portugal</div>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- NAVIGATION SECTIONS -->
+  <section class="nav-sections">
+    <p class="nav-sections-title">Explore the Portal</p>
+    <div class="sections-grid">
+
+      <!-- Get Started -->
+      <div class="section-col">
+        <div class="section-icon icon-get">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="section-heading">Get Started</div>
+        <ul class="section-links">
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Staff Support</a></li>
+          <li><a href="https://members.mplify.net/s/brand-center">Mplify Brand Center</a></li>
+          <li><a href="#">New Member Toolkit</a></li>
+          <li><a href="#">Marketing Tools</a></li>
+        </ul>
+      </div>
+
+      <!-- Participate -->
+      <div class="section-col">
+        <div class="section-icon icon-part">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="section-heading">Participate</div>
+        <ul class="section-links">
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoKnYAK">Commercial and Business Committee (CBC)</a></li>
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoMPYA0">Digital Services Committee (DSC)</a></li>
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoO1YAK">LSO Committee (LSOC)</a></li>
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoPdYAK">Test &amp; Certification Committee (TCC)</a></li>
+          <li><a href="https://members.mplify.net/s/recordlist/Project_Sprint_Ballot__c/00BUI00000E92qX2AR">Active Ballots</a></li>
+        </ul>
+      </div>
+
+      <!-- Learn -->
+      <div class="section-col">
+        <div class="section-icon icon-learn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="section-heading">Learn</div>
+        <ul class="section-links">
+          <li><a href="https://infographics.mplify.net">Infographics</a></li>
+          <li><a href="https://lso.mplify.net">LSO Marketplace</a></li>
+          <li><a href="https://www.mplify.net/network-as-a-service/#blueprint">NaaS Blueprint</a></li>
+          <li><a href="https://www.mplify.net/mef-state-of-the-industry-report/">State of the Industry</a></li>
+          <li><a href="#">Reference Presentations</a></li>
+          <li><a href="#">Educational Resources</a></li>
+          <li><a href="#">Marketing Tools</a></li>
+          <li><a href="https://www.mplify.net">Mplify Website</a></li>
+        </ul>
+      </div>
+
+      <!-- Network -->
+      <div class="section-col">
+        <div class="section-icon icon-net">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v3M7.5 17.5l3-2.5M16.5 17.5l-3-2.5"/></svg>
+        </div>
+        <div class="section-heading">Network</div>
+        <ul class="section-links">
+          <li><a href="https://gne.mplify.net/member-workdays/">Member Workdays</a></li>
+          <li><a href="https://gne.mplify.net/mplify-member-summit-emea/">Mplify Member Summit EMEA</a></li>
+          <li><a href="https://www.mplify.net/engage/connect/industry-events/">Industry Events</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect -->
+      <div class="section-col">
+        <div class="section-icon icon-conn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-1.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.92 16.92z"/></svg>
+        </div>
+        <div class="section-heading">Connect</div>
+        <ul class="section-links">
+          <li><a href="https://share.hsforms.com/1a6YCApwhQwCdESVK8D3JSg4a6lh">Subscribe to Updates</a></li>
+          <li><a href="https://members.mplify.net/s/recordlist/Project__c/00BUI00000DWBth2AH">Member Directory</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">© <span id="yr"></span> Mplify Alliance. All rights reserved. <span style="color:#2a3a55;margin:0 8px">|</span> <a href="https://www.mplify.net/privacy-policy/" style="color:var(--muted);text-decoration:none;">Privacy Policy</a></span>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/company/3501412/" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://www.youtube.com/@MplifyAlliance" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        YouTube
+      </a>
+      <a href="https://bsky.app/profile/mplifyalliance.bsky.social" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.299-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+        Bluesky
+      </a>
+    </div>
+  </footer>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
