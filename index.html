@@ -478,6 +478,54 @@
     .social-link:hover { color: var(--teal); }
     .social-link svg { width: 14px; height: 14px; }
 
+    /* ── LIGHTBOX ── */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .lightbox-overlay.active {
+      display: flex;
+    }
+    .lightbox-inner {
+      position: relative;
+      width: 90%;
+      max-width: 860px;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+    .lightbox-inner iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -520,10 +568,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           Register
         </a>
-        <a href="https://youtu.be/-oR-xB1meSQ" class="btn-ghost">
+        <button onclick="openLightbox()" class="btn-ghost">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Registration Tutorial
-        </a>
+        </button>
       </div>
     </div>
 
@@ -656,6 +704,36 @@
     </div>
   </footer>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+      <iframe id="lightbox-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
 </body>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  function openLightbox() {
+    document.getElementById('lightbox-iframe').src = 'https://www.youtube.com/embed/-oR-xB1meSQ?autoplay=1';
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.getElementById('lightbox-iframe').src = '';
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxOnBg(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
 </html>
