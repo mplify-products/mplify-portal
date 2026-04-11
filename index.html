@@ -8,7 +8,8 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── DARK MODE (default) ── */
+    /* ── DARK MODE (commented out for Salesforce Experience Cloud) ── */
+    /*
     :root {
       --navy:        #000136;
       --navy2:       #0a0d3a;
@@ -34,8 +35,37 @@
       --divider:     rgba(255,255,255,0.1);
       --footer-sep:  #2a3a55;
     }
+    */
 
-    /* ── LIGHT MODE ── */
+    /* ── LIGHT MODE (forced) ── */
+    :root {
+      --navy:        #e8edf5;
+      --navy2:       #d0d8eb;
+      --topbar-bg:   #244E9E;
+      --teal:        #244E9E;
+      --teal2:       #000136;
+      --orange:      #FD7801;
+      --orange2:     #c95e00;
+      --muted:       #555555;
+      --fg:          #000136;
+      --card-bg:     #ffffff;
+      --border:      rgba(0,1,54,0.12);
+      --nav-link:    rgba(255,255,255,0.85);
+      --hero-sub:    #244E9E;
+      --hero-desc:   #555555;
+      --event-sub:   #555555;
+      --link-color:  #555555;
+      --link-hover:  #000136;
+      --ghost-color: #244E9E;
+      --ghost-border:rgba(36,78,158,0.4);
+      --social-color:#555555;
+      --grid-line:   rgba(0,1,54,0.04);
+      --divider:     rgba(0,1,54,0.12);
+      --footer-sep:  #A1A1A1;
+    }
+
+    /* ── DARK MODE MEDIA QUERY (commented out for Salesforce Experience Cloud) ── */
+    /*
     @media (prefers-color-scheme: light) {
       :root {
         --navy:        #e8edf5;
@@ -63,6 +93,7 @@
         --footer-sep:  #A1A1A1;
       }
     }
+    */
 
     body {
       font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', sans-serif;
@@ -578,12 +609,12 @@
     </div>
 
     <div class="hero-right">
-      <div class="event-card">
+      <a href="https://members.mplify.net/s/2026-at-a-glance" class="event-card" style="text-decoration:none;">
         <span class="event-tag tag-workday">Workdays</span>
         <div class="event-title">Interim Workdays - Online</div>
         <div class="event-sub">Focusing on Agentic LSO and NaaS for AI</div>
         <div class="event-date">💻 28–29 April · Online</div>
-      </div>
+      </a>
       <!--
       <div class="event-card">
         <span class="event-tag tag-workday">Workdays</span>
@@ -594,8 +625,9 @@
       -->
       <a href="https://gne.mplify.net/mplify-member-summit-emea/" class="event-card" style="text-decoration:none;">
         <picture>
-          <source srcset="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events-Blue.svg" media="(prefers-color-scheme: light)" />
-          <img src="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events.png" alt="Global NaaS Events" style="height:22px;width:auto;object-fit:contain;margin-bottom:2px;display:block;align-self:flex-start;" />
+          <!-- source for dark mode commented out with dark mode support -->
+          <!-- <source srcset="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events.png" media="(prefers-color-scheme: dark)" /> -->
+          <img src="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events-Blue.svg" alt="Global NaaS Events" style="height:22px;width:auto;object-fit:contain;margin-bottom:2px;display:block;align-self:flex-start;" />
         </picture>
         <div class="event-title">Mplify Member Summit EMEA</div>
         <div class="event-sub">A Global NaaS Event</div>
