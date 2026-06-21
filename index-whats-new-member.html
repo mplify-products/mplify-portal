@@ -35,7 +35,11 @@
 
     body {
       font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', sans-serif;
-      background: var(--mp-navy);
+      background-color: var(--mp-navy);
+      background-image:
+        linear-gradient(var(--mp-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--mp-grid-line) 1px, transparent 1px);
+      background-size: 60px 60px;
       color: var(--mp-fg);
       min-height: 100vh;
       overflow-x: hidden;
@@ -71,7 +75,7 @@
        Appears only when Project_Sprint_Ballot__c.Is_open_for_voting__c > 0
     ══════════════════════════════════════════════════════════════ */
     .ballot-banner {
-      background: var(--mp-topbar-bg);
+      background: var(--mp-teal2);   /* #000136 dark navy — distinct from topbar blue */
       border-bottom: 3px solid var(--mp-orange);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; min-height: 46px; gap: 16px;
@@ -113,7 +117,7 @@
       position: relative; padding: 56px 40px 48px;
       overflow: hidden;
       display: grid; grid-template-columns: 1fr 2fr; gap: 40px;
-      align-items: center; background: var(--mp-navy);
+      align-items: start; background: transparent;
     }
     .member-hero-bg-radial {
       position: absolute; inset: 0;
@@ -123,14 +127,19 @@
       pointer-events: none;
     }
     .member-hero-bg-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--mp-grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--mp-grid-line) 1px, transparent 1px);
-      background-size: 60px 60px; pointer-events: none;
+      /* grid now on body */
+      position: absolute; inset: 0; pointer-events: none;
     }
     .member-hero-left { position: relative; z-index: 1; }
-    .member-hero-right { position: relative; z-index: 1; }
+    .member-hero-right {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .member-hero-sep {
+      height: 1px;
+      background: linear-gradient(to right, var(--mp-border), transparent);
+      margin: 4px 0;
+    }
 
     .hero-eyebrow {
       display: inline-block;
@@ -193,7 +202,7 @@
     /* ══════════════════════════════════════════════════════════════
        WHAT'S NEW STRIP  ← proposed new section
     ══════════════════════════════════════════════════════════════ */
-    .whats-new { padding: 20px 40px 4px; background: var(--mp-navy); }
+    .whats-new { padding: 20px 40px 4px; background: transparent; }
     .whats-new-header {
       display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;
     }
@@ -208,20 +217,18 @@
     }
     .whats-new-seeall:hover { color: var(--mp-teal2); }
 
+    /* No scroll — show however many cards fit, clip the rest */
     .whats-new-scroll {
-      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px;
-      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin; scrollbar-color: rgba(0,1,54,0.15) transparent;
+      display: flex; gap: 10px;
+      overflow: hidden;
+      flex-wrap: nowrap;
     }
-    .whats-new-scroll::-webkit-scrollbar { height: 3px; }
-    .whats-new-scroll::-webkit-scrollbar-thumb { background: rgba(0,1,54,0.15); border-radius: 2px; }
 
     .news-card {
       background: var(--mp-card-bg); border: 1px solid var(--mp-border);
       border-radius: 8px; padding: 11px 13px;
-      min-width: 195px; max-width: 195px;
+      flex: 0 0 195px;
       display: flex; flex-direction: column; gap: 5px;
-      scroll-snap-align: start; flex-shrink: 0;
       transition: border-color 0.2s, transform 0.15s;
       text-decoration: none; cursor: pointer; color: var(--mp-fg);
     }
@@ -250,7 +257,7 @@
     .news-date { font-size: 0.68rem; color: var(--mp-muted); margin-top: 1px; }
 
     /* ── Nav sections ── */
-    .nav-sections { padding: 32px 40px 72px; background: var(--mp-navy); }
+    .nav-sections { padding: 32px 40px 72px; background: transparent; }
     .nav-sections-title {
       font-family: 'Sansation', sans-serif; font-size: 16px; font-weight: 700;
       letter-spacing: 0.16em; text-transform: uppercase; color: var(--mp-fg); margin-bottom: 32px;
@@ -387,73 +394,53 @@
           <div class="event-date">📍 22–24 Sep · Boston</div>
         </a>
       </div>
-    </div>
-  </section>
 
-  <div class="page-divider"></div>
-
-  <!-- ══════════════════════════════════════════════════════════════
-       WHAT'S NEW STRIP  ← proposed new section
-  ══════════════════════════════════════════════════════════════ -->
-  <section class="whats-new">
-    <div class="whats-new-header">
-      <span class="whats-new-label">What's New</span>
-      <a href="/s/news" class="whats-new-seeall">
-        See all
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <div class="whats-new-scroll">
-
-      <!-- Pinned staff announcement (always first) -->
-      <a href="#" class="news-card pinned">
-        <span class="news-type type-announce">📌 Announcement</span>
-        <div class="news-title">Portal enhancements live — try the new project dashboard</div>
-        <div class="news-date">Jun 18, 2026</div>
-      </a>
-
-      <!-- Important ballot spotlighted by staff (orange accent) -->
-      <a href="https://members.mplify.net/s/open-ballots" class="news-card ballot-spotlight">
-        <span class="news-type type-ballot">🗳 Ballot</span>
-        <div class="news-title">Publish Ballot: MEF 55 NaaS Architecture Framework v3.0</div>
-        <div class="news-date">Closes Jun 30, 2026</div>
-      </a>
-
-      <!-- Research report -->
-      <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
-        <span class="news-type type-report">📊 Report</span>
-        <div class="news-title">LSO Solution Provider Landscape 2025</div>
-        <div class="news-date">Jun 17, 2026</div>
-      </a>
-
-      <!-- New project -->
-      <a href="#" class="news-card">
-        <span class="news-type type-project">🚀 Project</span>
-        <div class="news-title">New Project Approved: Agentic LSO Lifecycle Management</div>
-        <div class="news-date">May 22, 2026</div>
-      </a>
-
-      <!-- Blog post (from RSS) -->
-      <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
-        <span class="news-type type-blog">📝 Blog</span>
-        <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
-        <div class="news-date">Jun 3, 2026</div>
-      </a>
-
-      <!-- Podcast (from RSS) -->
-      <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
-        <span class="news-type type-podcast">🎙 Podcast</span>
-        <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
-        <div class="news-date">May 28, 2026</div>
-      </a>
-
-      <!-- Another blog -->
-      <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
-        <span class="news-type type-blog">📝 Blog</span>
-        <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
-        <div class="news-date">May 20, 2026</div>
-      </a>
-
+      <!-- What's New lives here, naturally right-aligned in the 2fr column -->
+      <div class="member-hero-sep"></div>
+      <div class="whats-new-header">
+        <span class="whats-new-label">What's New</span>
+        <a href="/s/news" class="whats-new-seeall">
+          See all
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="whats-new-scroll">
+        <a href="#" class="news-card pinned">
+          <span class="news-type type-announce">📌 Announcement</span>
+          <div class="news-title">Portal enhancements live — try the new project dashboard</div>
+          <div class="news-date">Jun 18, 2026</div>
+        </a>
+        <a href="https://members.mplify.net/s/open-ballots" class="news-card ballot-spotlight">
+          <span class="news-type type-ballot">🗳 Ballot</span>
+          <div class="news-title">Publish Ballot: MEF 55 NaaS Architecture Framework v3.0</div>
+          <div class="news-date">Closes Jun 30, 2026</div>
+        </a>
+        <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
+          <span class="news-type type-report">📊 Report</span>
+          <div class="news-title">LSO Solution Provider Landscape 2025</div>
+          <div class="news-date">Jun 17, 2026</div>
+        </a>
+        <a href="#" class="news-card">
+          <span class="news-type type-project">🚀 Project</span>
+          <div class="news-title">New Project Approved: Agentic LSO Lifecycle Management</div>
+          <div class="news-date">May 22, 2026</div>
+        </a>
+        <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
+          <span class="news-type type-blog">📝 Blog</span>
+          <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
+          <div class="news-date">Jun 3, 2026</div>
+        </a>
+        <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
+          <span class="news-type type-podcast">🎙 Podcast</span>
+          <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
+          <div class="news-date">May 28, 2026</div>
+        </a>
+        <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
+          <span class="news-type type-blog">📝 Blog</span>
+          <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
+          <div class="news-date">May 20, 2026</div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -552,6 +539,23 @@
     </div>
   </footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Hide any news card whose right edge falls outside the strip container
+  function clipNewsCards() {
+    const scroll = document.querySelector('.whats-new-scroll');
+    if (!scroll) return;
+    const limit = scroll.getBoundingClientRect().right;
+    scroll.querySelectorAll('.news-card').forEach(c => {
+      c.style.display = '';
+      if (c.getBoundingClientRect().right > limit + 1) {
+        c.style.display = 'none';
+      }
+    });
+  }
+  requestAnimationFrame(clipNewsCards);
+  window.addEventListener('resize', clipNewsCards);
+</script>
 </body>
 </html>

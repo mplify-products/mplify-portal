@@ -36,7 +36,11 @@
 
     body {
       font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', sans-serif;
-      background: var(--mp-navy);
+      background-color: var(--mp-navy);
+      background-image:
+        linear-gradient(var(--mp-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--mp-grid-line) 1px, transparent 1px);
+      background-size: 60px 60px;
       color: var(--mp-fg);
       min-height: 100vh;
       overflow-x: hidden;
@@ -70,24 +74,33 @@
     .topnav-login:hover { background: var(--mp-orange2) !important; }
     .nav-caret { margin-left: 2px; opacity: 0.7; }
 
-    /* ── Hero row layout (mplifyPortalPage.css) ── */
+    /* ── Hero row layout ── */
     .hero-row {
       display: grid;
       grid-template-columns: 1fr 340px;
-      background: var(--mp-navy);
+      background: transparent;
     }
-    .hero-col-left { min-width: 0; }
+    .hero-col-left  { min-width: 0; display: flex; flex-direction: column; }
     .hero-col-right {
-      display: flex; align-items: center;
-      padding: 72px 20px 60px 0;
+      display: flex; align-items: stretch;
+      padding: 72px 20px 32px 0;   /* grid comes from body now */
+    }
+    /* What's New lives inside .hero (hero-col-left), after the text block */
+    .whats-new-inset {
+      position: relative; z-index: 1;
+      margin-top: 28px;
     }
 
     /* ── Hero (mplifyHero.css) ── */
     .hero {
       position: relative;
-      padding: 72px 40px 60px;
+      padding: 72px 40px 32px;
       overflow: hidden;
+      flex: 1;               /* fill hero-col-left height */
+      display: flex;
+      flex-direction: column;
     }
+    .hero-left { flex: 1; } /* push whats-new-inset to the bottom */
     .hero-bg-radial {
       position: absolute; inset: 0;
       background:
@@ -97,10 +110,7 @@
     }
     .hero-bg-grid {
       position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--mp-grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--mp-grid-line) 1px, transparent 1px);
-      background-size: 60px 60px;
+      /* grid now on body — this div only exists for the radial on mobile/scoped use */
       pointer-events: none;
     }
     .hero-left { position: relative; z-index: 1; max-width: 66.666%; }
@@ -145,12 +155,14 @@
     /* ── Event cards (mplifyEventCards.css) ── */
     .events-wrap {
       display: flex; flex-direction: column; gap: 12px; min-width: 270px;
+      flex: 1;   /* fill the full height of hero-col-right */
     }
     .event-card {
       background: var(--mp-card-bg); border: 1px solid var(--mp-border);
       border-radius: 10px; padding: 18px 20px;
       display: flex; flex-direction: column; gap: 6px;
-      min-height: 145px; justify-content: center;
+      flex: 1;   /* each card takes equal share — bottoms align with left column */
+      min-height: 100px; justify-content: center;
       transition: border-color 0.2s, transform 0.2s;
       cursor: pointer; text-decoration: none;
       color: var(--mp-fg);
@@ -182,9 +194,8 @@
     /* ══════════════════════════════════════════════════════════════
        WHAT'S NEW STRIP  ← new element being proposed
     ══════════════════════════════════════════════════════════════ */
-    .whats-new {
-      padding: 20px 40px 4px;
-      background: var(--mp-navy);
+    .whats-new-inset {
+      background: transparent;   /* let hero grid/radial show through */
     }
     .whats-new-header {
       display: flex; align-items: center;
@@ -201,24 +212,18 @@
     }
     .whats-new-seeall:hover { color: var(--mp-teal2); }
 
+    /* No scroll — show however many cards fit, clip the rest */
     .whats-new-scroll {
       display: flex; gap: 10px;
-      overflow-x: auto; padding-bottom: 10px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0,1,54,0.15) transparent;
+      overflow: hidden;
+      flex-wrap: nowrap;
     }
-    .whats-new-scroll::-webkit-scrollbar { height: 3px; }
-    .whats-new-scroll::-webkit-scrollbar-track { background: transparent; }
-    .whats-new-scroll::-webkit-scrollbar-thumb { background: rgba(0,1,54,0.15); border-radius: 2px; }
 
     .news-card {
       background: var(--mp-card-bg); border: 1px solid var(--mp-border);
       border-radius: 8px; padding: 11px 13px;
-      min-width: 195px; max-width: 195px;
+      flex: 0 0 195px;   /* fixed width; container clips what doesn't fit */
       display: flex; flex-direction: column; gap: 5px;
-      scroll-snap-align: start; flex-shrink: 0;
       transition: border-color 0.2s, transform 0.15s;
       text-decoration: none; cursor: pointer; color: var(--mp-fg);
     }
@@ -247,7 +252,7 @@
     .news-date { font-size: 0.68rem; color: var(--mp-muted); margin-top: 1px; }
 
     /* ── Nav sections (mplifyNavSections.css) ── */
-    .nav-sections { padding: 32px 40px 72px; background: var(--mp-navy); }
+    .nav-sections { padding: 32px 40px 72px; background: transparent; }
     .nav-sections-title {
       font-family: 'Sansation', sans-serif; font-size: 16px; font-weight: 700;
       letter-spacing: 0.16em; text-transform: uppercase;
@@ -383,6 +388,62 @@
             </button>
           </div>
         </div>
+
+      <!-- What's New strip — inside hero, full width of left column -->
+      <div class="whats-new-inset">
+        <div class="whats-new-header">
+          <span class="whats-new-label">What's New</span>
+          <a href="/s/news" class="whats-new-seeall">
+            See all
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="whats-new-scroll">
+
+          <a href="#" class="news-card pinned">
+            <span class="news-type type-announce">📌 Announcement</span>
+            <div class="news-title">Portal enhancements live — try the new project dashboard</div>
+            <div class="news-date">Jun 18, 2026</div>
+          </a>
+
+          <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
+            <span class="news-type type-report">📊 Report</span>
+            <div class="news-title">LSO Solution Provider Landscape 2025</div>
+            <div class="news-date">Jun 17, 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
+            <span class="news-type type-blog">📝 Blog</span>
+            <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
+            <div class="news-date">Jun 3, 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
+            <span class="news-type type-podcast">🎙 Podcast</span>
+            <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
+            <div class="news-date">May 28, 2026</div>
+          </a>
+
+          <a href="#" class="news-card">
+            <span class="news-type type-project">🚀 Project</span>
+            <div class="news-title">New Project Approved: Agentic LSO Lifecycle Management</div>
+            <div class="news-date">May 22, 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
+            <span class="news-type type-blog">📝 Blog</span>
+            <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
+            <div class="news-date">May 20, 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/events/podcast-edge-decisions-redefining-the-connectivity-layer/" class="news-card">
+            <span class="news-type type-podcast">🎙 Podcast</span>
+            <div class="news-title">Edge Decisions: Redefining the Connectivity Layer</div>
+            <div class="news-date">May 14, 2026</div>
+          </a>
+
+        </div>
+      </div>
       </section>
     </div>
 
@@ -409,74 +470,10 @@
         </a>
       </div>
     </div>
-  </div>
+
+  </div><!-- end hero-row -->
 
   <div class="page-divider"></div>
-
-  <!-- ══════════════════════════════════════════════════
-       WHAT'S NEW STRIP  ← proposed new section
-  ══════════════════════════════════════════════════ -->
-  <section class="whats-new">
-    <div class="whats-new-header">
-      <span class="whats-new-label">What's New</span>
-      <a href="/s/news" class="whats-new-seeall">
-        See all
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <div class="whats-new-scroll">
-
-      <!-- Pinned staff announcement -->
-      <a href="#" class="news-card pinned">
-        <span class="news-type type-announce">📌 Announcement</span>
-        <div class="news-title">Portal enhancements live — try the new project dashboard</div>
-        <div class="news-date">Jun 18, 2026</div>
-      </a>
-
-      <!-- Research report -->
-      <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
-        <span class="news-type type-report">📊 Report</span>
-        <div class="news-title">LSO Solution Provider Landscape 2025</div>
-        <div class="news-date">Jun 17, 2026</div>
-      </a>
-
-      <!-- Blog post (from RSS: mplify.net/edge-view-blog/feed/) -->
-      <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
-        <span class="news-type type-blog">📝 Blog</span>
-        <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
-        <div class="news-date">Jun 3, 2026</div>
-      </a>
-
-      <!-- Podcast (from RSS: mplify.net/event_category/podcasts/feed/) -->
-      <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
-        <span class="news-type type-podcast">🎙 Podcast</span>
-        <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
-        <div class="news-date">May 28, 2026</div>
-      </a>
-
-      <!-- New project -->
-      <a href="#" class="news-card">
-        <span class="news-type type-project">🚀 Project</span>
-        <div class="news-title">New Project Approved: Agentic LSO Lifecycle Management</div>
-        <div class="news-date">May 22, 2026</div>
-      </a>
-
-      <!-- Another blog -->
-      <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
-        <span class="news-type type-blog">📝 Blog</span>
-        <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
-        <div class="news-date">May 20, 2026</div>
-      </a>
-
-      <!-- Another podcast -->
-      <a href="https://www.mplify.net/events/podcast-edge-decisions-redefining-the-connectivity-layer/" class="news-card">
-        <span class="news-type type-podcast">🎙 Podcast</span>
-        <div class="news-title">Edge Decisions: Redefining the Connectivity Layer</div>
-        <div class="news-date">May 14, 2026</div>
-      </a>
-
-    </div>
-  </section>
 
   <!-- NAV SECTIONS -->
   <section class="nav-sections">
@@ -573,6 +570,23 @@
     </div>
   </footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Hide any news card whose right edge falls outside the strip container
+  function clipNewsCards() {
+    const scroll = document.querySelector('.whats-new-scroll');
+    if (!scroll) return;
+    const limit = scroll.getBoundingClientRect().right;
+    scroll.querySelectorAll('.news-card').forEach(c => {
+      c.style.display = '';                                    // reset first
+      if (c.getBoundingClientRect().right > limit + 1) {
+        c.style.display = 'none';
+      }
+    });
+  }
+  requestAnimationFrame(clipNewsCards);
+  window.addEventListener('resize', clipNewsCards);
+</script>
 </body>
 </html>
