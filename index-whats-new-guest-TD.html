@@ -80,15 +80,10 @@
       grid-template-columns: 1fr 340px;
       background: transparent;
     }
-    .hero-col-left  { min-width: 0; display: flex; flex-direction: column; }
+    .hero-col-left  { min-width: 0; }
     .hero-col-right {
-      display: flex; align-items: stretch;
-      padding: 72px 20px 32px 0;   /* grid comes from body now */
-    }
-    /* What's New lives inside .hero (hero-col-left), after the text block */
-    .whats-new-inset {
-      position: relative; z-index: 1;
-      margin-top: 28px;
+      display: flex; align-items: flex-start;
+      padding: 72px 20px 32px 0;
     }
 
     /* ── Hero (mplifyHero.css) ── */
@@ -96,11 +91,15 @@
       position: relative;
       padding: 72px 40px 32px;
       overflow: hidden;
-      flex: 1;               /* fill hero-col-left height */
-      display: flex;
-      flex-direction: column;
     }
-    .hero-left { flex: 1; } /* push whats-new-inset to the bottom */
+    .hero-left { position: relative; z-index: 1; max-width: 66.666%; }
+
+    /* What's New — full-width strip between hero row and nav sections */
+    .whats-new-full {
+      padding: 0 40px 28px;
+      background: transparent;
+      position: relative; z-index: 1;
+    }
     .hero-bg-radial {
       position: absolute; inset: 0;
       background:
@@ -122,7 +121,7 @@
     .hero-heading .accent { color: var(--mp-teal); text-decoration: none; }
     .hero-sub { font-size: 1rem; font-weight: 300; color: var(--mp-hero-sub); margin-bottom: 30px; }
     .hero-desc { font-size: 0.92rem; line-height: 1.75; color: var(--mp-hero-desc); }
-    .hero-ctas { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .hero-ctas { display: flex; gap: 12px; margin-top: 32px; flex-wrap: nowrap; max-width: none; }
 
     .mp-btn-primary {
       background: var(--mp-orange); color: #fff;
@@ -154,15 +153,13 @@
 
     /* ── Event cards (mplifyEventCards.css) ── */
     .events-wrap {
-      display: flex; flex-direction: column; gap: 12px; min-width: 270px;
-      flex: 1;   /* fill the full height of hero-col-right */
+      display: flex; flex-direction: column; gap: 8px; min-width: 270px;
     }
     .event-card {
       background: var(--mp-card-bg); border: 1px solid var(--mp-border);
-      border-radius: 10px; padding: 18px 20px;
-      display: flex; flex-direction: column; gap: 6px;
-      flex: 1;   /* each card takes equal share — bottoms align with left column */
-      min-height: 100px; justify-content: center;
+      border-radius: 10px; padding: 13px 16px;
+      display: flex; flex-direction: column; gap: 5px;
+      justify-content: flex-start;
       transition: border-color 0.2s, transform 0.2s;
       cursor: pointer; text-decoration: none;
       color: var(--mp-fg);
@@ -405,110 +402,6 @@
           </div>
         </div>
 
-      <!-- What's New strip — inside hero, full width of left column -->
-      <div class="whats-new-inset">
-        <div class="whats-new-header">
-          <span class="whats-new-label">What's New</span>
-          <a href="/s/news" class="whats-new-seeall">
-            See all
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-        <div class="whats-new-scroll">
-
-          <a href="#" class="news-card pinned">
-            <span class="news-type type-announce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10" style="vertical-align:-1px;margin-right:3px;"><path d="M3 11v2h4l5 4V7L7 11H3z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Call for Interest</span>
-            <div class="news-title">Agentic ASR ordering in US (pinned item)</div>
-            <div class="news-date">22 Jun 2026</div>
-          </a>
-
-          <a href="#" class="news-card">
-            <span class="news-type type-project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10" style="vertical-align:-1px;margin-right:3px;"><path d="M3 11v2h4l5 4V7L7 11H3z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Call for Interest</span>
-            <div class="news-title">Standardized ESG attributes</div>
-            <div class="news-date">22 Jun 2026</div>
-          </a>
-
-          <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
-            <span class="news-type type-report">📊 Report</span>
-            <div class="news-title">LSO Solution Provider Landscape 2025</div>
-            <div class="news-date">17 Jun 2026</div>
-          </a>
-
-          <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
-            <span class="news-type type-blog">📝 Blog</span>
-            <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
-            <div class="news-date">3 Jun 2026</div>
-          </a>
-
-          <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
-            <span class="news-type type-podcast">🎙 Podcast</span>
-            <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
-            <div class="news-date">28 May 2026</div>
-          </a>
-
-          <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
-            <span class="news-type type-blog">📝 Blog</span>
-            <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
-            <div class="news-date">20 May 2026</div>
-          </a>
-
-          <a href="https://www.mplify.net/events/podcast-edge-decisions-redefining-the-connectivity-layer/" class="news-card">
-            <span class="news-type type-podcast">🎙 Podcast</span>
-            <div class="news-title">Edge Decisions: Redefining the Connectivity Layer</div>
-            <div class="news-date">14 May 2026</div>
-          </a>
-
-        </div>
-
-        <div class="whats-new-scroll" style="margin-top:10px;">
-
-          <a href="#" class="news-card">
-            <div class="news-card-header">
-              <span class="news-type type-ballot" style="text-transform:none;">NaaS for AI</span>
-              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="news-title">Defining network types for inferencing</div>
-            <div class="news-date">Jun 2026</div>
-          </a>
-
-          <a href="#" class="news-card">
-            <div class="news-card-header">
-              <span class="news-type type-ballot">Carrier Ethernet</span>
-              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="news-title">Defining new AI performance tiers</div>
-            <div class="news-date">Jun 2026</div>
-          </a>
-
-          <a href="#" class="news-card">
-            <div class="news-card-header">
-              <span class="news-type type-ballot">SD-WAN</span>
-              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="news-title">Defining test and certification requirements</div>
-            <div class="news-date">Jun 2026</div>
-          </a>
-
-          <a href="#" class="news-card">
-            <div class="news-card-header">
-              <span class="news-type type-ballot">Quantum Safe</span>
-              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="news-title">Extending current Mplify 174 standard</div>
-            <div class="news-date">Jun 2026</div>
-          </a>
-
-          <a href="#" class="news-card">
-            <div class="news-card-header">
-              <span class="news-type type-ballot">Agentic LSO</span>
-              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            </div>
-            <div class="news-title">Defining architecture and blueprints</div>
-            <div class="news-date">Jun 2026</div>
-          </a>
-
-        </div>
-      </div>
       </section>
     </div>
 
@@ -516,7 +409,7 @@
       <div class="events-wrap">
         <!-- EVENT_CARDS from mplifyData.js (current production) -->
         <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="event-card">
-          <span class="event-tag tag-report">Workshop</span>
+          <img src="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events-Blue.svg" alt="Global NaaS Events" class="card-logo" />
           <div class="event-title">APAC Member Workshop</div>
           <div class="event-sub">Colocated with BATIC 2026 conference</div>
           <div class="event-date">📍 24 August · Bali, Indonesia</div>
@@ -537,6 +430,138 @@
     </div>
 
   </div><!-- end hero-row -->
+
+  <!-- WHAT'S NEW — full-width strip below both columns -->
+  <div class="whats-new-full">
+    <div class="whats-new-header">
+      <span class="whats-new-label">What's New</span>
+      <a href="/s/news" class="whats-new-seeall">
+        See all
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="whats-new-scroll">
+
+      <a href="#" class="news-card pinned">
+        <span class="news-type type-announce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10" style="vertical-align:-1px;margin-right:3px;"><path d="M3 11v2h4l5 4V7L7 11H3z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Call for Interest</span>
+        <div class="news-title">Agentic ASR ordering in US</div>
+        <div class="news-date">22 Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <span class="news-type type-project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10" style="vertical-align:-1px;margin-right:3px;"><path d="M3 11v2h4l5 4V7L7 11H3z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Call for Interest</span>
+        <div class="news-title">Standardized ESG attributes</div>
+        <div class="news-date">22 Jun 2026</div>
+      </a>
+
+      <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
+        <span class="news-type type-report">📊 Report</span>
+        <div class="news-title">LSO Solution Provider Landscape 2025</div>
+        <div class="news-date">17 Jun 2026</div>
+      </a>
+
+      <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
+        <span class="news-type type-blog">📝 Blog</span>
+        <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
+        <div class="news-date">3 Jun 2026</div>
+      </a>
+
+      <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
+        <span class="news-type type-podcast">🎙 Podcast</span>
+        <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
+        <div class="news-date">28 May 2026</div>
+      </a>
+
+      <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
+        <span class="news-type type-blog">📝 Blog</span>
+        <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
+        <div class="news-date">20 May 2026</div>
+      </a>
+
+      <a href="https://www.mplify.net/events/podcast-edge-decisions-redefining-the-connectivity-layer/" class="news-card">
+        <span class="news-type type-podcast">🎙 Podcast</span>
+        <div class="news-title">Edge Decisions: Redefining the Connectivity Layer</div>
+        <div class="news-date">14 May 2026</div>
+      </a>
+
+    </div>
+
+    <div class="whats-new-scroll" style="margin-top:10px;">
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot" style="text-transform:none;">NaaS for AI</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">Defining network types for inferencing</div>
+        <div class="news-date">Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot">Carrier Ethernet</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">Defining new AI performance tiers</div>
+        <div class="news-date">Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot">SD-WAN</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">Defining test and certification requirements</div>
+        <div class="news-date">Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot">Quantum Safe</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">Extending current Mplify 174 standard</div>
+        <div class="news-date">Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot">Agentic LSO</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">Defining architecture and blueprints</div>
+        <div class="news-date">Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot">SASE</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">SASE Policy Management Agentic LSO Use Case</div>
+        <div class="news-date">Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot">Cross-Connect</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">Cross-Connect Product Attributes (Mplify W176)</div>
+        <div class="news-date">Jun 2026</div>
+      </a>
+
+      <a href="#" class="news-card">
+        <div class="news-card-header">
+          <span class="news-type type-ballot">Federation</span>
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="news-title">Federated Private Network Framework - Instant L2 Connectivity</div>
+        <div class="news-date">May 2026</div>
+      </a>
+
+    </div>
+  </div>
 
   <div class="page-divider"></div>
 
