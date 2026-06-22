@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mplify Member Portal — What's New mockup (guest)</title>
+  <link href="https://fonts.cdnfonts.com/css/sansation" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── production CSS tokens (from mplifyPortalPage.css / mplifyMemberPage.css) ── */
+    :root {
+      --mp-navy:         #e8edf5;
+      --mp-navy2:        #d0d8eb;
+      --mp-topbar-bg:    #244E9E;
+      --mp-teal:         #244E9E;
+      --mp-teal2:        #000136;
+      --mp-orange:       #FD7801;
+      --mp-orange2:      #c95e00;
+      --mp-muted:        #555555;
+      --mp-fg:           #000136;
+      --mp-card-bg:      #ffffff;
+      --mp-border:       rgba(0,1,54,0.12);
+      --mp-nav-link:     rgba(255,255,255,0.85);
+      --mp-hero-sub:     #244E9E;
+      --mp-hero-desc:    #555555;
+      --mp-event-sub:    #555555;
+      --mp-link-color:   #555555;
+      --mp-link-hover:   #000136;
+      --mp-ghost-color:  #244E9E;
+      --mp-ghost-border: rgba(36,78,158,0.4);
+      --mp-grid-line:    rgba(0,1,54,0.04);
+      --mp-divider:      rgba(0,1,54,0.12);
+      --mp-footer-sep:   #A1A1A1;
+    }
+
+    body {
+      font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', sans-serif;
+      background-color: var(--mp-navy);
+      background-image:
+        linear-gradient(var(--mp-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--mp-grid-line) 1px, transparent 1px);
+      background-size: 60px 60px;
+      color: var(--mp-fg);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Topbar (mplifyTopbar.css) ── */
+    .topbar {
+      background: var(--mp-topbar-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .topnav { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .topnav a {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--mp-nav-link);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .topnav a:hover { color: var(--mp-orange); }
+    .topnav-login {
+      background: var(--mp-orange); color: #fff !important;
+      padding: 6px 18px; border-radius: 4px; transition: background 0.2s !important;
+    }
+    .topnav-login:hover { background: var(--mp-orange2) !important; }
+    .nav-caret { margin-left: 2px; opacity: 0.7; }
+
+    /* ── Hero row layout ── */
+    .hero-row {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      background: transparent;
+    }
+    .hero-col-left  { min-width: 0; display: flex; flex-direction: column; }
+    .hero-col-right {
+      display: flex; align-items: stretch;
+      padding: 72px 20px 32px 0;   /* grid comes from body now */
+    }
+    /* What's New lives inside .hero (hero-col-left), after the text block */
+    .whats-new-inset {
+      position: relative; z-index: 1;
+      margin-top: 28px;
+    }
+
+    /* ── Hero (mplifyHero.css) ── */
+    .hero {
+      position: relative;
+      padding: 72px 40px 32px;
+      overflow: hidden;
+      flex: 1;               /* fill hero-col-left height */
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-left { flex: 1; } /* push whats-new-inset to the bottom */
+    .hero-bg-radial {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 10% 50%, rgba(61,123,199,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 90% 20%, rgba(253,120,1,0.1) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero-bg-grid {
+      position: absolute; inset: 0;
+      /* grid now on body — this div only exists for the radial on mobile/scoped use */
+      pointer-events: none;
+    }
+    .hero-left { position: relative; z-index: 1; max-width: 66.666%; }
+    .hero-heading {
+      font-family: 'Sansation', sans-serif;
+      font-weight: 800; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1;
+      color: var(--mp-fg); margin-bottom: 14px;
+    }
+    .hero-heading .accent { color: var(--mp-teal); text-decoration: none; }
+    .hero-sub { font-size: 1rem; font-weight: 300; color: var(--mp-hero-sub); margin-bottom: 30px; }
+    .hero-desc { font-size: 0.92rem; line-height: 1.75; color: var(--mp-hero-desc); }
+    .hero-ctas { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+
+    .mp-btn-primary {
+      background: var(--mp-orange); color: #fff;
+      font-family: 'Sansation', sans-serif; font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 12px 28px;
+      border-radius: 6px; text-decoration: none; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .mp-btn-primary:hover { background: var(--mp-orange2); transform: translateY(-1px); }
+    .mp-btn-teal {
+      background: var(--mp-teal); color: #fff;
+      font-family: 'Sansation', sans-serif; font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 12px 28px;
+      border-radius: 6px; text-decoration: none; border: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .mp-btn-teal:hover { background: var(--mp-teal2); transform: translateY(-1px); }
+    .mp-btn-ghost {
+      background: transparent; color: var(--mp-ghost-color);
+      border: 1px solid var(--mp-ghost-border);
+      font-family: 'Sansation', sans-serif; font-weight: 600; font-size: 0.85rem;
+      padding: 12px 24px; border-radius: 6px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .mp-btn-ghost:hover { border-color: var(--mp-teal); color: var(--mp-teal); }
+
+    /* ── Event cards (mplifyEventCards.css) ── */
+    .events-wrap {
+      display: flex; flex-direction: column; gap: 12px; min-width: 270px;
+      flex: 1;   /* fill the full height of hero-col-right */
+    }
+    .event-card {
+      background: var(--mp-card-bg); border: 1px solid var(--mp-border);
+      border-radius: 10px; padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 6px;
+      flex: 1;   /* each card takes equal share — bottoms align with left column */
+      min-height: 100px; justify-content: center;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer; text-decoration: none;
+      color: var(--mp-fg);
+    }
+    .event-card:hover { border-color: var(--mp-teal); transform: translateX(-3px); }
+    .event-tag {
+      font-family: 'Sansation', sans-serif; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 3px; width: fit-content;
+    }
+    .tag-workday { background: rgba(61,123,199,0.2); color: var(--mp-teal); }
+    .tag-summit  { background: rgba(253,120,1,0.2);  color: var(--mp-orange); }
+    .tag-report  { background: rgba(121,0,114,0.2);  color: #790072; }
+    .event-title {
+      font-family: 'Sansation', sans-serif; font-weight: 700; font-size: 0.95rem;
+      color: var(--mp-fg);
+    }
+    .event-sub  { font-size: 0.78rem; color: var(--mp-event-sub); }
+    .event-date { font-size: 0.78rem; font-weight: 500; color: var(--mp-teal); margin-top: 4px; }
+    .card-logo  { height: 22px; width: auto; object-fit: contain; margin-bottom: 2px; display: block; }
+
+    /* ── Divider ── */
+    .page-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mp-divider), transparent);
+      margin: 0 40px;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       WHAT'S NEW STRIP  ← new element being proposed
+    ══════════════════════════════════════════════════════════════ */
+    .whats-new-inset {
+      background: transparent;   /* let hero grid/radial show through */
+    }
+    .whats-new-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 10px;
+    }
+    .whats-new-label {
+      font-family: 'Sansation', sans-serif; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--mp-muted);
+    }
+    .whats-new-seeall {
+      font-family: 'Sansation', sans-serif; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.06em; color: var(--mp-teal); text-decoration: none;
+      display: flex; align-items: center; gap: 4px; transition: color 0.2s;
+    }
+    .whats-new-seeall:hover { color: var(--mp-teal2); }
+
+    /* No scroll — show however many cards fit, clip the rest */
+    .whats-new-scroll {
+      display: flex; gap: 10px;
+      overflow: hidden;
+      flex-wrap: nowrap;
+    }
+
+    .news-card {
+      background: var(--mp-card-bg); border: 1px solid var(--mp-border);
+      border-radius: 8px; padding: 11px 13px;
+      flex: 0 0 195px;   /* fixed width; container clips what doesn't fit */
+      display: flex; flex-direction: column; gap: 5px;
+      transition: border-color 0.2s, transform 0.15s;
+      text-decoration: none; cursor: pointer; color: var(--mp-fg);
+    }
+    .news-card:hover { border-color: var(--mp-teal); transform: translateY(-2px); }
+    /* Pinned card: teal left accent */
+    .news-card.pinned { border-left: 3px solid var(--mp-teal); }
+
+    .news-type {
+      font-family: 'Sansation', sans-serif; font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 3px; width: fit-content;
+    }
+    .type-announce { background: rgba(36,78,158,0.12); color: var(--mp-teal); }
+    .type-ballot   { background: rgba(253,120,1,0.15);  color: var(--mp-orange); }
+    .type-project  { background: rgba(36,78,158,0.12);  color: var(--mp-teal); }
+    .type-report   { background: rgba(121,0,114,0.15);  color: #790072; }
+    .type-blog     { background: rgba(85,85,85,0.08);   color: #444; }
+    .type-podcast  { background: rgba(0,130,80,0.12);   color: #007d4a; }
+
+    .news-title {
+      font-family: 'Sansation', sans-serif; font-size: 0.79rem; font-weight: 700;
+      color: var(--mp-fg); line-height: 1.35;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .news-date { font-size: 0.68rem; color: var(--mp-muted); margin-top: 1px; }
+
+    /* ── Nav sections (mplifyNavSections.css) ── */
+    .nav-sections { padding: 112px 40px 72px; background: transparent; }
+    .nav-sections-title {
+      font-family: 'Sansation', sans-serif; font-size: 16px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--mp-fg); margin-bottom: 32px;
+    }
+    .sections-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .section-col {
+      background: var(--mp-card-bg); border: 1px solid var(--mp-border);
+      border-radius: 12px; padding: 28px 24px;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .section-col:hover { border-color: var(--mp-teal); transform: translateY(-4px); }
+    .section-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      margin-bottom: 16px; display: flex; align-items: center; justify-content: center;
+    }
+    .icon-get   { background: rgba(61,123,199,0.15); color: var(--mp-teal); }
+    .icon-part  { background: rgba(253,120,1,0.15);  color: var(--mp-orange); }
+    .icon-learn { background: rgba(254,191,16,0.15); color: #FEBF10; }
+    .icon-net   { background: rgba(121,0,114,0.15);  color: #790072; }
+    .section-icon svg { width: 18px; height: 18px; }
+    .section-heading {
+      font-family: 'Sansation', sans-serif; font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.04em; color: var(--mp-fg);
+      margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--mp-border);
+    }
+    .section-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .section-links li a {
+      font-size: 0.83rem; color: var(--mp-link-color); text-decoration: none;
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 8px; transition: color 0.2s;
+    }
+    .section-links li a:hover { color: var(--mp-link-hover); }
+    .lock {
+      font-size: 0.6rem; line-height: 1.4; color: var(--mp-orange);
+      background: rgba(253,120,1,0.15); padding: 1px 5px; border-radius: 3px;
+      letter-spacing: 0.05em; white-space: nowrap; flex-shrink: 0;
+    }
+    .badge-highlight {
+      font-size: 0.6rem; line-height: 1.4; color: var(--mp-teal);
+      background: rgba(36,78,158,0.12); padding: 1px 5px; border-radius: 3px;
+      letter-spacing: 0.05em; white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--mp-border); padding: 28px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--mp-navy2);
+    }
+    .footer-copy { font-size: 0.78rem; color: var(--mp-muted); }
+    .footer-copy a { color: var(--mp-muted); text-decoration: none; }
+    .social-links { display: flex; gap: 14px; }
+    .social-link {
+      display: flex; align-items: center; gap: 6px; font-size: 0.78rem;
+      font-weight: 500; color: var(--mp-muted); text-decoration: none; transition: color 0.2s;
+    }
+    .social-link:hover { color: var(--mp-teal); }
+    .social-link svg { width: 14px; height: 14px; }
+
+    @keyframes mp-fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <a href="https://members.mplify.net/s/">
+      <img src="https://www.mplify.net/Assets/Logos/Mplify-Logo-Stacked-white.svg" alt="Mplify" style="height:44px;width:auto;" />
+    </a>
+    <nav>
+      <ul class="topnav">
+        <li><a href="https://members.mplify.net/s/recordlist/Project__c/00BUI00000DWBth2AH?Project__c-filterId=Active_Projects">Projects</a></li>
+        <li><a href="https://www.mplify.net/engage/connect/">Connect</a></li>
+        <li><a href="https://members.mplify.net/s/help">Help</a></li>
+        <li>
+          <button style="background:none;border:none;cursor:pointer;" class="topnav">
+            <a href="#" style="color:rgba(255,255,255,0.85);font-family:'Sansation',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">
+              Participate <span class="nav-caret">▾</span>
+            </a>
+          </button>
+        </li>
+        <li>
+          <a href="#" style="color:rgba(255,255,255,0.85);font-family:'Sansation',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">
+            Learn <span class="nav-caret">▾</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" style="color:rgba(255,255,255,0.85);font-family:'Sansation',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;">
+            Engage <span class="nav-caret">▾</span>
+          </a>
+        </li>
+        <li><a href="https://members.mplify.net/s/login/" class="topnav-login">Login →</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO ROW -->
+  <div class="hero-row">
+    <div class="hero-col-left">
+      <section class="hero">
+        <div class="hero-bg-radial" aria-hidden="true"></div>
+        <div class="hero-bg-grid"   aria-hidden="true"></div>
+        <div class="hero-left">
+          <h1 class="hero-heading">
+            Welcome to the<br />
+            <a href="https://www.mplify.net/about-mplify/our-members" class="accent">Mplify Member</a>
+            &nbsp;Portal
+          </h1>
+          <p class="hero-sub">The Resource Hub for Mplify Members</p>
+          <p class="hero-desc">
+            Welcome to the Mplify Member Portal, your central resource for engaging with the Mplify ecosystem.
+            Access active projects, working group materials, and an expanding library of member resources,
+            including marketing and brand assets. Designed to support collaboration and execution, the Portal
+            brings together the tools and information you need to stay informed, participate in initiatives,
+            and contribute to the work shaping the AI-powered digital economy.
+          </p>
+          <div class="hero-ctas">
+            <a href="https://members.mplify.net/s/login/" class="mp-btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              Login
+            </a>
+            <a href="https://members.mplify.net/s/new-registration" class="mp-btn-teal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              Register
+            </a>
+            <button class="mp-btn-ghost" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Registration Tutorial
+            </button>
+            <a href="https://members.mplify.net/s/recordlist/Project__c/00BUI00000DWBth2AH?Project__c-filterId=Active_Projects" class="mp-btn-primary" style="position:relative;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+              Member Projects
+              <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" width="11" height="11" style="position:absolute;top:5px;right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </a>
+          </div>
+        </div>
+
+      <!-- What's New strip — inside hero, full width of left column -->
+      <div class="whats-new-inset">
+        <div class="whats-new-header">
+          <span class="whats-new-label">What's New</span>
+          <a href="/s/news" class="whats-new-seeall">
+            See all
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="whats-new-scroll">
+
+          <a href="#" class="news-card pinned">
+            <span class="news-type type-announce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10" style="vertical-align:-1px;margin-right:3px;"><path d="M3 11v2h4l5 4V7L7 11H3z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Call for Interest</span>
+            <div class="news-title">Agentic ASR ordering in US</div>
+            <div class="news-date">Jun 2026</div>
+          </a>
+
+          <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
+            <span class="news-type type-report">📊 Report</span>
+            <div class="news-title">LSO Solution Provider Landscape 2025</div>
+            <div class="news-date">Jun 17, 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
+            <span class="news-type type-blog">📝 Blog</span>
+            <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
+            <div class="news-date">Jun 3, 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
+            <span class="news-type type-podcast">🎙 Podcast</span>
+            <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
+            <div class="news-date">May 28, 2026</div>
+          </a>
+
+          <a href="#" class="news-card">
+            <span class="news-type type-project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10" style="vertical-align:-1px;margin-right:3px;"><path d="M3 11v2h4l5 4V7L7 11H3z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Call for Interest</span>
+            <div class="news-title">Standardized ESG attributes</div>
+            <div class="news-date">Jun 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
+            <span class="news-type type-blog">📝 Blog</span>
+            <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
+            <div class="news-date">May 20, 2026</div>
+          </a>
+
+          <a href="https://www.mplify.net/events/podcast-edge-decisions-redefining-the-connectivity-layer/" class="news-card">
+            <span class="news-type type-podcast">🎙 Podcast</span>
+            <div class="news-title">Edge Decisions: Redefining the Connectivity Layer</div>
+            <div class="news-date">May 14, 2026</div>
+          </a>
+
+        </div>
+
+        <div class="whats-new-scroll" style="margin-top:10px;">
+
+          <a href="#" class="news-card" style="position:relative;">
+            <span class="news-type type-ballot">NaaS for AI</span>
+            <div class="news-title">Defining network types for inferencing</div>
+            <div class="news-date">Jun 2026</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="position:absolute;top:5px;right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </a>
+
+          <a href="#" class="news-card" style="position:relative;">
+            <span class="news-type type-ballot">Carrier Ethernet</span>
+            <div class="news-title">Defining new AI performance tiers</div>
+            <div class="news-date">Jun 2026</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="position:absolute;top:5px;right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </a>
+
+          <a href="#" class="news-card" style="position:relative;">
+            <span class="news-type type-ballot">SD-WAN</span>
+            <div class="news-title">Defining test and certification requirements</div>
+            <div class="news-date">Jun 2026</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="position:absolute;top:5px;right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </a>
+
+          <a href="#" class="news-card" style="position:relative;">
+            <span class="news-type type-ballot">Quantum Safe</span>
+            <div class="news-title">Extending current Mplify 174 standard</div>
+            <div class="news-date">Jun 2026</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="position:absolute;top:5px;right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </a>
+
+          <a href="#" class="news-card" style="position:relative;">
+            <span class="news-type type-ballot">Agentic LSO</span>
+            <div class="news-title">Defining architecture and blueprints</div>
+            <div class="news-date">Jun 2026</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="position:absolute;top:5px;right:6px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </a>
+
+        </div>
+      </div>
+      </section>
+    </div>
+
+    <div class="hero-col-right">
+      <div class="events-wrap">
+        <!-- EVENT_CARDS from mplifyData.js (current production) -->
+        <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="event-card">
+          <span class="event-tag tag-report">Asia Members</span>
+          <div class="event-title">Face to Face Meeting @BATIC</div>
+          <div class="event-sub">Details to be announced shortly.</div>
+          <div class="event-date">📍 24–28 Aug</div>
+        </a>
+        <a href="https://members.mplify.net/s/2026-at-a-glance" class="event-card">
+          <span class="event-tag tag-workday">Workdays</span>
+          <div class="event-title">Member Workdays Americas</div>
+          <div class="event-sub">Co-located with the Member Summit Americas</div>
+          <div class="event-date">📍 21–22 September · Boston, MA, USA</div>
+        </a>
+        <a href="https://gne.mplify.net/mplify-member-summit-americas/" class="event-card">
+          <img src="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events-Blue.svg" alt="Global NaaS Events" class="card-logo" />
+          <div class="event-title">Member Summit Americas</div>
+          <div class="event-sub">A Global NaaS Event</div>
+          <div class="event-date">📍 23–24 September · Boston, MA, USA</div>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- end hero-row -->
+
+  <div class="page-divider"></div>
+
+  <!-- NAV SECTIONS -->
+  <section class="nav-sections">
+    <p class="nav-sections-title">Explore the Portal</p>
+    <div class="sections-grid">
+
+      <div class="section-col">
+        <div class="section-icon icon-get">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="section-heading">Get Started</div>
+        <ul class="section-links">
+          <li><a href="https://members.mplify.net/s/help">Help Center</a></li>
+          <li><a href="#">Mplify Staff</a></li>
+          <li><a href="https://members.mplify.net/s/brand-center">Mplify Brand Center <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="#">New Member Toolkit <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="#">Marketing Tools <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/certification-logos">Certification Resources <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/resources">Member Resources <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        </ul>
+      </div>
+
+      <div class="section-col">
+        <div class="section-icon icon-part">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="section-heading">Participate</div>
+        <ul class="section-links">
+          <li><a href="https://members.mplify.net/s/recordlist/Project__c/00BUI00000DWBth2AH?Project__c-filterId=Active_Projects">Active Projects <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoKnYAK">Commercial and Business Committee (CBC) <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoMPYA0">Digital Services Committee (DSC) <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoO1YAK">LSO Committee (LSOC) <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoPdYAK">Test &amp; Certification Committee (TCC) <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/open-ballots">Open Ballots <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        </ul>
+      </div>
+
+      <div class="section-col">
+        <div class="section-icon icon-learn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="section-heading">Learn</div>
+        <ul class="section-links">
+          <li><a href="https://www.mplify.net/learn/technical-standards-sdks/">Standards &amp; SDKs</a></li>
+          <li><a href="https://members.mplify.net/s/infographics">Infographics <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://lso.mplify.net">LSO Marketplace</a></li>
+          <li><a href="https://members.mplify.net/s/resources/research-reports">Research Reports <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="#">Reference Presentations <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="#">Educational Resources <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://www.mplify.net">Mplify Website</a></li>
+        </ul>
+      </div>
+
+      <div class="section-col">
+        <div class="section-icon icon-net">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v3M7.5 17.5l3-2.5M16.5 17.5l-3-2.5"/></svg>
+        </div>
+        <div class="section-heading">Engage</div>
+        <ul class="section-links">
+          <li><a href="https://members.mplify.net/s/2026-at-a-glance">Member Workdays <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-teal)" stroke-width="2.5" width="13" height="13" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="var(--mp-teal)" stroke="none"/></svg></a></li>
+          <li><a href="https://members.mplify.net/s/resources/presentations/2026-lisbon">Member Summit EMEA <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-teal)" stroke-width="2.5" width="13" height="13" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="var(--mp-teal)" stroke="none"/></svg></a></li>
+          <li><a href="https://gne.mplify.net/mplify-member-summit-americas/">Member Summit Americas <svg viewBox="0 0 24 24" fill="none" stroke="var(--mp-orange)" stroke-width="2.5" width="11" height="11" style="flex-shrink:0;margin-top:2px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+          <li><a href="https://www.mplify.net/engage/connect/industry-events/">Industry Events</a></li>
+          <li><a href="https://share.hsforms.com/1a6YCApwhQwCdESVK8D3JSg4a6lh">Subscribe</a></li>
+          <li><a href="https://www.linkedin.com/company/3501412/">LinkedIn</a></li>
+          <li><a href="https://www.youtube.com/@MplifyAlliance">YouTube</a></li>
+          <li><a href="https://bsky.app/profile/mplifyalliance.bsky.social">Bluesky</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">
+      © <span id="yr"></span> Mplify Alliance. All rights reserved.
+      <span style="color:var(--mp-footer-sep);margin:0 8px">|</span>
+      <a href="https://www.mplify.net/privacy-policy/">Privacy Policy</a>
+    </span>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/company/3501412/" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://www.youtube.com/@MplifyAlliance" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        YouTube
+      </a>
+      <a href="https://bsky.app/profile/mplifyalliance.bsky.social" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.299-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+        Bluesky
+      </a>
+    </div>
+  </footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Hide any news card whose right edge falls outside the strip container
+  function clipNewsCards() {
+    const scroll = document.querySelector('.whats-new-scroll');
+    if (!scroll) return;
+    const limit = scroll.getBoundingClientRect().right;
+    scroll.querySelectorAll('.news-card').forEach(c => {
+      c.style.display = '';                                    // reset first
+      if (c.getBoundingClientRect().right > limit + 1) {
+        c.style.display = 'none';
+      }
+    });
+  }
+  requestAnimationFrame(clipNewsCards);
+  window.addEventListener('resize', clipNewsCards);
+</script>
+</body>
+</html>

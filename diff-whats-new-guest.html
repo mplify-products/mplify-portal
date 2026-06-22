@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Change Log — index-whats-new-guest</title>
+  <link href="https://fonts.cdnfonts.com/css/sansation" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #000136;
+      --teal: #244E9E;
+      --orange: #FD7801;
+      --bg: #e8edf5;
+      --card: #ffffff;
+      --border: rgba(0,1,54,0.12);
+      --muted: #555;
+      --added-bg: #edfaf3;
+      --added-border: #1a9e60;
+      --removed-bg: #fdf0ee;
+      --removed-border: #d84f30;
+      --neutral-bg: #f4f6fb;
+    }
+    body {
+      font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      padding: 48px 40px 80px;
+      background-image: linear-gradient(rgba(0,1,54,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,1,54,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    header {
+      margin-bottom: 40px;
+    }
+    .doc-label {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 10px; display: block;
+    }
+    h1 {
+      font-family: 'Sansation', sans-serif;
+      font-size: 1.6rem; font-weight: 800; color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 0.88rem; color: var(--muted);
+    }
+    .files-row {
+      display: flex; gap: 16px; margin-top: 20px;
+    }
+    .file-pill {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 6px; padding: 8px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .file-pill .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .dot-removed { background: var(--removed-border); }
+    .dot-added   { background: var(--added-border); }
+
+    /* Table */
+    .table-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+    }
+    table {
+      width: 100%; border-collapse: collapse;
+    }
+    thead tr {
+      background: var(--navy);
+    }
+    thead th {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.85);
+      padding: 14px 20px; text-align: left;
+    }
+    thead th:nth-child(1) { width: 14%; }
+    thead th:nth-child(2) { width: 14%; }
+    thead th:nth-child(3) { width: 36%; }
+    thead th:nth-child(4) { width: 36%; }
+
+    /* Section header rows */
+    tr.section-row td {
+      background: var(--neutral-bg);
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--teal);
+      padding: 10px 20px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Data rows */
+    tbody tr.data-row td {
+      padding: 14px 20px;
+      font-size: 0.82rem;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr.data-row:last-child td {
+      border-bottom: none;
+    }
+    td.col-num  { color: var(--muted); font-size: 0.72rem; padding-top: 16px; }
+    td.col-area { font-weight: 600; color: var(--navy); font-size: 0.8rem; }
+    td.col-before {
+      background: var(--removed-bg);
+      border-left: 3px solid var(--removed-border);
+      color: #7a2a1a;
+    }
+    td.col-after {
+      background: var(--added-bg);
+      border-left: 3px solid var(--added-border);
+      color: #0d5c35;
+    }
+    td.col-before code, td.col-after code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.76rem;
+      background: rgba(0,0,0,0.05);
+      padding: 1px 4px; border-radius: 3px;
+    }
+
+    /* NEW / REMOVED badges */
+    .badge {
+      display: inline-block;
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 3px;
+      margin-bottom: 5px;
+    }
+    .badge-new      { background: rgba(26,158,96,0.15);  color: #0d5c35; }
+    .badge-removed  { background: rgba(216,79,48,0.15);  color: #7a2a1a; }
+    .badge-changed  { background: rgba(36,78,158,0.12);  color: var(--teal); }
+
+    .na { color: var(--muted); font-style: italic; font-size: 0.78rem; }
+
+    /* Summary bar */
+    .summary {
+      display: flex; gap: 20px; margin-bottom: 24px;
+    }
+    .stat {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 20px;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .stat-num {
+      font-family: 'Sansation', sans-serif;
+      font-size: 1.4rem; font-weight: 800;
+    }
+    .stat-label { font-size: 0.72rem; color: var(--muted); }
+    .stat-num.orange { color: var(--orange); }
+    .stat-num.green  { color: var(--added-border); }
+    .stat-num.red    { color: var(--removed-border); }
+    .stat-num.teal   { color: var(--teal); }
+
+    footer {
+      margin-top: 36px; font-size: 0.72rem; color: var(--muted); text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="doc-label">Change Log</span>
+  <h1>index-whats-new-guest.html</h1>
+  <p class="subtitle">Comparison of the original file vs the DBL revision — prepared for review</p>
+  <div class="files-row">
+    <div class="file-pill"><span class="dot dot-removed"></span>index-whats-new-guest.html &nbsp;(original)</div>
+    <div class="file-pill"><span class="dot dot-added"></span>index-whats-new-guest-DBL.html &nbsp;(revised)</div>
+  </div>
+</header>
+
+<div class="summary">
+  <div class="stat"><span class="stat-num teal">11</span><span class="stat-label">Total changes</span></div>
+  <div class="stat"><span class="stat-num green">2</span><span class="stat-label">New elements added</span></div>
+  <div class="stat"><span class="stat-num orange">9</span><span class="stat-label">Existing elements changed</span></div>
+  <div class="stat"><span class="stat-num red">0</span><span class="stat-label">Elements removed</span></div>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Area</th>
+      <th>Original</th>
+      <th>Revised</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <!-- HERO CTAs -->
+    <tr class="section-row"><td colspan="4">Hero — Call-to-Action Buttons</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">1</td>
+      <td class="col-area">New button</td>
+      <td class="col-before"><span class="badge badge-removed">Not present</span><br>No fourth CTA button</td>
+      <td class="col-after"><span class="badge badge-new">Added</span><br><strong>Member Projects</strong> button added to the right of "Registration Tutorial" — orange primary style, briefcase icon, white padlock badge in top-right corner</td>
+    </tr>
+
+    <!-- WHAT'S NEW ROW 1 -->
+    <tr class="section-row"><td colspan="4">What's New — Row 1 Cards</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">2</td>
+      <td class="col-area">Card 1 label</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>📌 <code>Announcement</code></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Megaphone icon + <code>Call for Interest</code></td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">3</td>
+      <td class="col-area">Card 1 title &amp; date</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Portal enhancements live — try the new project dashboard<br><em>Jun 18, 2026</em></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Agentic ASR ordering in US<br><em>Jun 2026</em></td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">4</td>
+      <td class="col-area">Card 5 label</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>🚀 <code>Project</code></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Megaphone icon + <code>Call for Interest</code></td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">5</td>
+      <td class="col-area">Card 5 title &amp; date</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>New Project Approved: Agentic LSO Lifecycle Management<br><em>May 22, 2026</em></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Standardized ESG attributes<br><em>Jun 2026</em></td>
+    </tr>
+
+    <!-- WHAT'S NEW ROW 2 -->
+    <tr class="section-row"><td colspan="4">What's New — Row 2 (New Section)</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">6</td>
+      <td class="col-area">Second card row</td>
+      <td class="col-before"><span class="badge badge-removed">Not present</span><br>Single row of news cards only</td>
+      <td class="col-after"><span class="badge badge-new">Added</span><br>New second row of 5 orange-badged cards with orange padlock icons: <strong>NaaS for AI</strong> · <strong>Carrier Ethernet</strong> · <strong>SD-WAN</strong> · <strong>Quantum Safe</strong> · <strong>Agentic LSO</strong></td>
+    </tr>
+
+    <!-- RIGHT COLUMN EVENT CARDS -->
+    <tr class="section-row"><td colspan="4">Right Column — Event Cards</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">7</td>
+      <td class="col-area">Event card 1</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>Research Reports</code><br>LSO Solution Provider Landscape Report<br>Watch Webinar and Download Report<br><em>📍 17 June</em></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>Asia Members</code><br>Face to Face Meeting @BATIC<br>Details to be announced shortly.<br><em>📍 24–28 Aug</em></td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">8</td>
+      <td class="col-area">Member Summit Americas date</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>📍 22–24 September · Boston, MA, USA</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>📍 23–24 September · Boston, MA, USA</td>
+    </tr>
+
+    <!-- EXPLORE THE PORTAL -->
+    <tr class="section-row"><td colspan="4">Explore the Portal — Member Access Indicators</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">9</td>
+      <td class="col-area">All "Member Only" text badges</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Orange text badge: <code>Member Only</code> — appears on 17 links across Get Started, Participate, Learn, and Engage columns</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Replaced with inline orange padlock SVG icon on all 17 links</td>
+    </tr>
+
+    <!-- ENGAGE COLUMN -->
+    <tr class="section-row"><td colspan="4">Explore the Portal — Engage Column</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">10</td>
+      <td class="col-area">Recordings indicators</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Teal text badge: <code>New Recordings</code> on Member Workdays and Member Summit EMEA</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Replaced with teal play-circle SVG icon on both links</td>
+    </tr>
+
+    <!-- LAYOUT -->
+    <tr class="section-row"><td colspan="4">Layout &amp; Spacing</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">11</td>
+      <td class="col-area">Spacing above "Explore the Portal"</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Top padding: <code>32px</code></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Top padding: <code>112px</code> (increased to add breathing room below news card rows)</td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<footer>
+  Generated by Claude · index-whats-new-guest.html vs index-whats-new-guest-DBL.html · June 2026
+</footer>
+
+</body>
+</html>
