@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Change Log — index-whats-new-member DBL → TD</title>
+  <link href="https://fonts.cdnfonts.com/css/sansation" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #000136;
+      --teal: #244E9E;
+      --orange: #FD7801;
+      --bg: #e8edf5;
+      --card: #ffffff;
+      --border: rgba(0,1,54,0.12);
+      --muted: #555;
+      --added-bg: #edfaf3;
+      --added-border: #1a9e60;
+      --removed-bg: #fdf0ee;
+      --removed-border: #d84f30;
+      --neutral-bg: #f4f6fb;
+    }
+    body {
+      font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      padding: 48px 40px 80px;
+      background-image: linear-gradient(rgba(0,1,54,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,1,54,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    header { margin-bottom: 40px; }
+    .doc-label {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 10px; display: block;
+    }
+    h1 {
+      font-family: 'Sansation', sans-serif;
+      font-size: 1.6rem; font-weight: 800; color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .subtitle { font-size: 0.88rem; color: var(--muted); }
+    .files-row { display: flex; gap: 16px; margin-top: 20px; }
+    .file-pill {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 6px; padding: 8px 14px;
+      font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .file-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-removed { background: var(--removed-border); }
+    .dot-added   { background: var(--added-border); }
+
+    .table-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: var(--navy); }
+    thead th {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.85);
+      padding: 14px 20px; text-align: left;
+    }
+    thead th:nth-child(1) { width: 14%; }
+    thead th:nth-child(2) { width: 14%; }
+    thead th:nth-child(3) { width: 36%; }
+    thead th:nth-child(4) { width: 36%; }
+
+    tr.section-row td {
+      background: var(--neutral-bg);
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--teal);
+      padding: 10px 20px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr.data-row td {
+      padding: 14px 20px;
+      font-size: 0.82rem;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr.data-row:last-child td { border-bottom: none; }
+    td.col-num  { color: var(--muted); font-size: 0.72rem; padding-top: 16px; }
+    td.col-area { font-weight: 600; color: var(--navy); font-size: 0.8rem; }
+    td.col-before {
+      background: var(--removed-bg);
+      border-left: 3px solid var(--removed-border);
+      color: #7a2a1a;
+    }
+    td.col-after {
+      background: var(--added-bg);
+      border-left: 3px solid var(--added-border);
+      color: #0d5c35;
+    }
+    td.col-before code, td.col-after code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.76rem;
+      background: rgba(0,0,0,0.05);
+      padding: 1px 4px; border-radius: 3px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 3px;
+      margin-bottom: 5px;
+    }
+    .badge-new      { background: rgba(26,158,96,0.15);  color: #0d5c35; }
+    .badge-removed  { background: rgba(216,79,48,0.15);  color: #7a2a1a; }
+    .badge-changed  { background: rgba(36,78,158,0.12);  color: var(--teal); }
+
+    .summary { display: flex; gap: 20px; margin-bottom: 24px; }
+    .stat {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 20px;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .stat-num {
+      font-family: 'Sansation', sans-serif;
+      font-size: 1.4rem; font-weight: 800;
+    }
+    .stat-label { font-size: 0.72rem; color: var(--muted); }
+    .stat-num.orange { color: var(--orange); }
+    .stat-num.green  { color: var(--added-border); }
+    .stat-num.red    { color: var(--removed-border); }
+    .stat-num.teal   { color: var(--teal); }
+
+    footer {
+      margin-top: 36px; font-size: 0.72rem; color: var(--muted); text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="doc-label">Change Log</span>
+  <h1>index-whats-new-member DBL → TD</h1>
+  <p class="subtitle">TD refinements applied on top of Daniel's DBL revision — prepared for review</p>
+  <div class="files-row">
+    <div class="file-pill"><span class="dot dot-removed"></span>index-whats-new-member - DBL.html &nbsp;(Daniel)</div>
+    <div class="file-pill"><span class="dot dot-added"></span>index-whats-new-member-TD.html &nbsp;(Tom)</div>
+  </div>
+</header>
+
+<div class="summary">
+  <div class="stat"><span class="stat-num teal">7</span><span class="stat-label">Total changes</span></div>
+  <div class="stat"><span class="stat-num green">0</span><span class="stat-label">New elements added</span></div>
+  <div class="stat"><span class="stat-num orange">7</span><span class="stat-label">Existing elements changed</span></div>
+  <div class="stat"><span class="stat-num red">0</span><span class="stat-label">Elements removed</span></div>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Area</th>
+      <th>DBL (Daniel)</th>
+      <th>TD (Tom)</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <!-- PINNED / SPOTLIGHT CARDS -->
+    <tr class="section-row"><td colspan="4">What's New — Highlighted Card Styles</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">1</td>
+      <td class="col-area">Pinned card treatment</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Subtle left accent only: <code>border-left: 3px solid var(--mp-teal)</code> — visually indistinguishable from other cards at a glance</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Explicit promotion: teal-tinted background <code>rgba(36,78,158,0.06)</code>, stronger border <code>rgba(36,78,158,0.35)</code>, and <code>box-shadow: inset 4px 0 0 var(--mp-teal)</code> — left accent via inset shadow avoids border-radius corner artifact</td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">2</td>
+      <td class="col-area">Ballot spotlight card</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Orange left accent only: <code>border-left: 3px solid var(--mp-orange)</code> — same visual weight issue as pinned</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Same treatment as pinned, using orange: background <code>rgba(253,120,1,0.05)</code>, border <code>rgba(253,120,1,0.35)</code>, <code>box-shadow: inset 4px 0 0 var(--mp-orange)</code> — visually consistent with the pinned card pattern</td>
+    </tr>
+
+    <!-- DATE ALIGNMENT -->
+    <tr class="section-row"><td colspan="4">What's New — Card Date Alignment</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">3</td>
+      <td class="col-area">Date position in card</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.news-date { margin-top: 1px; }</code> — date sits directly below the title, creating uneven heights across cards</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>.news-date { margin-top: auto; padding-top: 6px; }</code> — date always pinned to the bottom of each card regardless of title length</td>
+    </tr>
+
+    <!-- DATE FORMAT -->
+    <tr class="section-row"><td colspan="4">Dates — Format &amp; Wording</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">4</td>
+      <td class="col-area">Full date format</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>US format throughout: <code>Jun 17, 2026</code> / <code>Jun 3, 2026</code> / <code>May 28, 2026</code> / <code>May 20, 2026</code><br>Ballot close: <code>Closes Jun 30, 2026</code><br>Banner deadline: <code>Voting closes Jun 30</code></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>International format throughout: <code>17 Jun 2026</code> / <code>3 Jun 2026</code> / <code>28 May 2026</code> / <code>20 May 2026</code><br>Ballot close: <code>Closes 30 Jun 2026</code><br>Banner deadline: <code>Voting closes 30 Jun</code> — day-first, no comma, consistent with guest file</td>
+    </tr>
+
+    <!-- GNE LOGO -->
+    <tr class="section-row"><td colspan="4">Right Column — Event Card Logo</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">5</td>
+      <td class="col-area">GNE logo alignment</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.card-logo</code> renders centred inside the flex-column event card due to default <code>align-items: stretch</code> behaviour on the image element</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Added <code>align-self: flex-start</code> to <code>.card-logo</code> — logo left-justifies to match the text and tag above it</td>
+    </tr>
+
+    <!-- SCROLL CONTAINER -->
+    <tr class="section-row"><td colspan="4">What's New — Scroll Container</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">6</td>
+      <td class="col-area">Strip container padding</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.whats-new-scroll</code> has no padding — <code>overflow:hidden</code> clips at the exact container edge</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>padding: 2px 0 2px 2px</code> added — provides breathing room so the first card's border-radius is not clipped by the overflow boundary</td>
+    </tr>
+
+    <!-- NAAS BADGE -->
+    <tr class="section-row"><td colspan="4">What's New — NaaS for AI Badge</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">7</td>
+      <td class="col-area">NaaS capitalisation</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>text-transform: uppercase</code> on <code>.news-type</code> renders "NAAS FOR AI" — incorrect; the standard abbreviation requires lowercase aa</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>style="text-transform:none;"</code> inline override on the NaaS for AI badge — renders "NaaS for AI" exactly as intended while all other badges remain uppercase</td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<footer>
+  Generated by Claude · index-whats-new-member - DBL.html vs index-whats-new-member-TD.html · June 2026
+</footer>
+
+</body>
+</html>

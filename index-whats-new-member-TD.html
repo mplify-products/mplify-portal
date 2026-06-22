@@ -190,7 +190,7 @@
     }
     .event-sub  { font-size: 0.78rem; color: var(--mp-event-sub); }
     .event-date { font-size: 0.78rem; font-weight: 500; color: var(--mp-teal); margin-top: 4px; }
-    .card-logo  { height: 22px; width: auto; object-fit: contain; margin-bottom: 2px; display: block; }
+    .card-logo  { height: 22px; width: auto; object-fit: contain; margin-bottom: 2px; display: block; align-self: flex-start; }
 
     /* ── Divider ── */
     .page-divider {
@@ -222,6 +222,7 @@
       display: flex; gap: 10px;
       overflow: hidden;
       flex-wrap: nowrap;
+      padding: 2px 0 2px 2px;
     }
 
     .news-card {
@@ -233,9 +234,18 @@
       text-decoration: none; cursor: pointer; color: var(--mp-fg);
     }
     .news-card:hover { border-color: var(--mp-teal); transform: translateY(-2px); }
-    .news-card.pinned { border-left: 3px solid var(--mp-teal); }
-    /* Ballot spotlight card: orange left accent */
-    .news-card.ballot-spotlight { border-left: 3px solid var(--mp-orange); }
+    /* Pinned card: visibly promoted by staff */
+    .news-card.pinned {
+      background: rgba(36,78,158,0.06);
+      border-color: rgba(36,78,158,0.35);
+      box-shadow: inset 4px 0 0 var(--mp-teal);
+    }
+    /* Ballot spotlight card: orange accent — same treatment as pinned */
+    .news-card.ballot-spotlight {
+      background: rgba(253,120,1,0.05);
+      border-color: rgba(253,120,1,0.35);
+      box-shadow: inset 4px 0 0 var(--mp-orange);
+    }
 
     .news-type {
       font-family: 'Sansation', sans-serif; font-size: 0.58rem; font-weight: 700;
@@ -254,7 +264,7 @@
       color: var(--mp-fg); line-height: 1.35;
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
-    .news-date { font-size: 0.68rem; color: var(--mp-muted); margin-top: 1px; }
+    .news-date { font-size: 0.68rem; color: var(--mp-muted); margin-top: auto; padding-top: 6px; }
 
     /* ── Nav sections ── */
     .nav-sections { padding: 112px 40px 72px; background: transparent; }
@@ -348,7 +358,7 @@
       <span class="ballot-banner-icon">🗳</span>
       <span class="ballot-banner-text">
         <strong>Ballot Week is open</strong> — 18 ballots need your vote
-        <span class="deadline">· Voting closes Jun 30</span>
+        <span class="deadline">· Voting closes 30 Jun</span>
       </span>
     </div>
     <div class="ballot-banner-right">
@@ -385,13 +395,13 @@
           <span class="event-tag tag-workday">Workdays</span>
           <div class="event-title">Member Workdays Americas</div>
           <div class="event-sub">Co-located with the Member Summit Americas</div>
-          <div class="event-date">📍 21–22 Sep · Boston</div>
+          <div class="event-date">📍 21–22 September · Boston</div>
         </a>
         <a href="https://gne.mplify.net/mplify-member-summit-americas/" class="event-card">
           <img src="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events-Blue.svg" alt="Global NaaS Events" class="card-logo" />
           <div class="event-title">Member Summit Americas</div>
           <div class="event-sub">A Global NaaS Event</div>
-          <div class="event-date">📍 23–24 Sep · Boston</div>
+          <div class="event-date">📍 23–24 September · Boston</div>
         </a>
         <a href="#" class="event-card">
           <span class="event-tag tag-summit">To Be Announced</span>
@@ -419,12 +429,12 @@
         <a href="https://members.mplify.net/s/open-ballots" class="news-card ballot-spotlight">
           <span class="news-type type-ballot">🗳 Ballot</span>
           <div class="news-title">Publish Ballot: MEF 55 NaaS Architecture Framework v3.0</div>
-          <div class="news-date">Closes Jun 30, 2026</div>
+          <div class="news-date">Closes 30 Jun 2026</div>
         </a>
         <a href="https://members.mplify.net/s/resources/research-reports/lso-solution-provider-landscape" class="news-card">
           <span class="news-type type-report">📊 Report</span>
           <div class="news-title">LSO Solution Provider Landscape 2025</div>
-          <div class="news-date">Jun 17, 2026</div>
+          <div class="news-date">17 Jun 2026</div>
         </a>
         <a href="#" class="news-card">
           <span class="news-type type-project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10" style="vertical-align:-1px;margin-right:3px;"><path d="M3 11v2h4l5 4V7L7 11H3z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Call for Interest</span>
@@ -434,17 +444,17 @@
         <a href="https://www.mplify.net/edge-view-blog/member-spotlight-colt-and-telekom-deutschland-advance-lso-sonata-integration/" class="news-card">
           <span class="news-type type-blog">📝 Blog</span>
           <div class="news-title">Member Spotlight: Colt and Telekom Deutschland Advance LSO Sonata</div>
-          <div class="news-date">Jun 3, 2026</div>
+          <div class="news-date">3 Jun 2026</div>
         </a>
         <a href="https://www.mplify.net/events/podcast-deterministic-networks-rebuilding-the-ai-backbone/" class="news-card">
           <span class="news-type type-podcast">🎙 Podcast</span>
           <div class="news-title">Deterministic Networks: Rebuilding the AI Backbone</div>
-          <div class="news-date">May 28, 2026</div>
+          <div class="news-date">28 May 2026</div>
         </a>
         <a href="https://www.mplify.net/edge-view-blog/from-ai-demand-to-network-delivery-where-the-industry-is-moving/" class="news-card">
           <span class="news-type type-blog">📝 Blog</span>
           <div class="news-title">From AI Demand to Network Delivery: Where the Industry Is Moving</div>
-          <div class="news-date">May 20, 2026</div>
+          <div class="news-date">20 May 2026</div>
         </a>
       </div>
 
@@ -453,31 +463,26 @@
           <span class="news-type type-ballot" style="text-transform:none;">NaaS for AI</span>
           <div class="news-title">Defining network types for inferencing</div>
           <div class="news-date">Jun 2026</div>
-          
         </a>
         <a href="#" class="news-card">
           <span class="news-type type-ballot">Carrier Ethernet</span>
           <div class="news-title">Defining new AI performance tiers</div>
           <div class="news-date">Jun 2026</div>
-          
         </a>
         <a href="#" class="news-card">
           <span class="news-type type-ballot">SD-WAN</span>
           <div class="news-title">Defining test and certification requirements</div>
           <div class="news-date">Jun 2026</div>
-          
         </a>
         <a href="#" class="news-card">
           <span class="news-type type-ballot">Quantum Safe</span>
           <div class="news-title">Extending current Mplify 174 standard</div>
           <div class="news-date">Jun 2026</div>
-          
         </a>
         <a href="#" class="news-card">
           <span class="news-type type-ballot">Agentic LSO</span>
           <div class="news-title">Defining architecture and blueprints</div>
           <div class="news-date">Jun 2026</div>
-          
         </a>
       </div>
     </div>
