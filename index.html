@@ -3,781 +3,292 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mplify Member Portal</title>
+  <title>Mplify Portal — Mockup Index</title>
   <link href="https://fonts.cdnfonts.com/css/sansation" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    /* ── DARK MODE (commented out for Salesforce Experience Cloud) ── */
-    /*
     :root {
-      --navy:        #000136;
-      --navy2:       #0a0d3a;
-      --topbar-bg:   #060a2e;
-      --teal:        #3D7BC7;
-      --teal2:       #244E9E;
-      --orange:      #FD7801;
-      --orange2:     #c95e00;
-      --muted:       #A1A1A1;
-      --fg:          #ffffff;
-      --card-bg:     #060a2e;
-      --border:      rgba(255,255,255,0.09);
-      --nav-link:    rgba(255,255,255,0.65);
-      --hero-sub:    rgba(255,255,255,0.6);
-      --hero-desc:   rgba(255,255,255,0.55);
-      --event-sub:   rgba(255,255,255,0.45);
-      --link-color:  rgba(255,255,255,0.55);
-      --link-hover:  #ffffff;
-      --ghost-color: rgba(255,255,255,0.7);
-      --ghost-border:rgba(255,255,255,0.15);
-      --social-color:rgba(255,255,255,0.5);
-      --grid-line:   rgba(255,255,255,0.025);
-      --divider:     rgba(255,255,255,0.1);
-      --footer-sep:  #2a3a55;
+      --navy:   #000136;
+      --teal:   #244E9E;
+      --orange: #FD7801;
+      --bg:     #e8edf5;
+      --card:   #ffffff;
+      --border: rgba(0,1,54,0.12);
+      --muted:  #555555;
     }
-    */
-
-    /* ── LIGHT MODE (forced) ── */
-    :root {
-      --navy:        #e8edf5;
-      --navy2:       #d0d8eb;
-      --topbar-bg:   #244E9E;
-      --teal:        #244E9E;
-      --teal2:       #000136;
-      --orange:      #FD7801;
-      --orange2:     #c95e00;
-      --muted:       #555555;
-      --fg:          #000136;
-      --card-bg:     #ffffff;
-      --border:      rgba(0,1,54,0.12);
-      --nav-link:    rgba(255,255,255,0.85);
-      --hero-sub:    #244E9E;
-      --hero-desc:   #555555;
-      --event-sub:   #555555;
-      --link-color:  #555555;
-      --link-hover:  #000136;
-      --ghost-color: #244E9E;
-      --ghost-border:rgba(36,78,158,0.4);
-      --social-color:#555555;
-      --grid-line:   rgba(0,1,54,0.04);
-      --divider:     rgba(0,1,54,0.12);
-      --footer-sep:  #A1A1A1;
-    }
-
-    /* ── DARK MODE MEDIA QUERY (commented out for Salesforce Experience Cloud) ── */
-    /*
-    @media (prefers-color-scheme: light) {
-      :root {
-        --navy:        #e8edf5;
-        --navy2:       #d0d8eb;
-        --topbar-bg:   #244E9E;
-        --teal:        #244E9E;
-        --teal2:       #000136;
-        --orange:      #FD7801;
-        --orange2:     #c95e00;
-        --muted:       #555555;
-        --fg:          #000136;
-        --card-bg:     #ffffff;
-        --border:      rgba(0,1,54,0.12);
-        --nav-link:    rgba(255,255,255,0.85);
-        --hero-sub:    #244E9E;
-        --hero-desc:   #555555;
-        --event-sub:   #555555;
-        --link-color:  #555555;
-        --link-hover:  #000136;
-        --ghost-color: #244E9E;
-        --ghost-border:rgba(36,78,158,0.4);
-        --social-color:#555555;
-        --grid-line:   rgba(0,1,54,0.04);
-        --divider:     rgba(0,1,54,0.12);
-        --footer-sep:  #A1A1A1;
-      }
-    }
-    */
-
     body {
       font-family: 'Avenir Next LT Pro', 'Avenir Next', 'Avenir', sans-serif;
-      background: var(--navy);
-      color: var(--fg);
+      background: var(--bg);
+      color: var(--navy);
       min-height: 100vh;
-      overflow-x: hidden;
+      background-image:
+        linear-gradient(rgba(0,1,54,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,1,54,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
 
-    /* ── TOPBAR ── */
-    .topbar {
-      background: var(--topbar-bg);
-      border-bottom: 1px solid var(--border);
+    header {
+      background: var(--teal);
+      padding: 0 48px;
+      height: 64px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      height: 68px;
+      gap: 20px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 10;
       backdrop-filter: blur(8px);
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-mark {
-      width: 36px;
-      height: 36px;
-    }
-
-    .logo-text {
+    header img { height: 40px; width: auto; }
+    .header-title {
       font-family: 'Sansation', sans-serif;
-      font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: 0.04em;
-      color: var(--fg);
-    }
-    .logo-text span { color: var(--teal); }
-
-    .topnav {
-      display: flex;
-      gap: 32px;
-      list-style: none;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      border-left: 1px solid rgba(255,255,255,0.25);
+      padding-left: 20px;
     }
 
-    .topnav a {
+    main { max-width: 1100px; margin: 0 auto; padding: 56px 48px 80px; }
+
+    .page-eyebrow {
       font-family: 'Sansation', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--nav-link);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 10px; display: block;
     }
-    .topnav a:hover { color: var(--teal); }
-
-    .topnav-login {
-      background: var(--orange);
-      color: #ffffff !important;
-      padding: 6px 18px;
-      border-radius: 4px;
-      transition: background 0.2s !important;
-    }
-    .topnav-login:hover { background: var(--orange2); color: #ffffff !important; }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      padding: 72px 40px 60px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 40px;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 70% at 10% 50%, rgba(61,123,199,0.15) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 50% at 90% 20%, rgba(253,120,1,0.1) 0%, transparent 55%);
-      pointer-events: none;
-    }
-
-    /* Decorative grid lines */
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-    }
-
-    .hero-left {
-      position: relative;
-      z-index: 1;
-      width: 66.666%;
-    }
-
-    .hero-eyebrow {
-      display: inline-block;
+    h1 {
       font-family: 'Sansation', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal);
-      background: rgba(61,123,199,0.15);
-      border: 1px solid rgba(61,123,199,0.3);
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      animation: fadeUp 0.6s ease both;
+      font-size: 2rem; font-weight: 800; color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: 0.9rem; color: var(--muted);
+      margin-bottom: 52px;
     }
 
-    .hero h1 {
+    .group { margin-bottom: 48px; }
+    .group-label {
       font-family: 'Sansation', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.1;
-      color: var(--fg);
-      margin-bottom: 14px;
-      animation: fadeUp 0.6s 0.1s ease both;
-    }
-    .hero h1 .accent { color: var(--teal); }
-
-    .hero-sub {
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--hero-sub);
-      margin-bottom: 30px;
-      animation: fadeUp 0.6s 0.2s ease both;
-    }
-
-    .hero-desc {
-      font-size: 0.92rem;
-      line-height: 1.75;
-      color: var(--hero-desc);
-      animation: fadeUp 0.6s 0.3s ease both;
-    }
-    .hero-desc a { color: var(--teal); text-decoration: none; }
-    .hero-desc a:hover { text-decoration: underline; }
-
-    .hero-ctas {
-      display: flex;
-      gap: 12px;
-      margin-top: 32px;
-      animation: fadeUp 0.6s 0.4s ease both;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--orange);
-      color: #ffffff;
-      font-family: 'Sansation', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 12px 28px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      cursor: pointer;
-      border: none;
-    }
-    .btn-primary:hover { background: var(--orange2); transform: translateY(-1px); }
-    .btn-primary svg { width: 16px; height: 16px; }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: transparent;
-      color: var(--ghost-color);
-      font-family: 'Sansation', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      padding: 12px 24px;
-      border-radius: 6px;
-      border: 1px solid var(--ghost-border);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
-      cursor: pointer;
-    }
-    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
-
-    .btn-teal {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--teal);
-      color: #ffffff;
-      font-family: 'Sansation', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 12px 28px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-      cursor: pointer;
-      border: none;
-    }
-    .btn-teal:hover { background: var(--teal2); transform: translateY(-1px); }
-    .btn-teal svg { width: 16px; height: 16px; }
-
-    /* ── EVENT CARDS ── */
-    .hero-right {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-width: 270px;
-      animation: fadeUp 0.6s 0.3s ease both;
-    }
-
-    .event-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      height: 145px;
-      justify-content: center;
-      transition: border-color 0.2s, transform 0.2s;
-      cursor: pointer;
-    }
-    .event-card:hover { border-color: var(--teal); transform: translateX(-3px); }
-
-    .event-tag {
-      font-family: 'Sansation', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 3px;
-      width: fit-content;
-    }
-    .tag-workday { background: rgba(61,123,199,0.2); color: var(--teal); }
-    .tag-summit  { background: rgba(253,120,1,0.2); color: var(--orange); }
-    .tag-report  { background: rgba(121,0,114,0.2); color: #790072; }
-
-    .event-title {
-      font-family: 'Sansation', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--fg);
-    }
-
-    .event-sub {
-      font-size: 0.78rem;
-      color: var(--event-sub);
-    }
-
-    .event-date {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--teal);
-      margin-top: 4px;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--divider), transparent);
-      margin: 0 40px;
-    }
-
-    /* ── NAV SECTIONS ── */
-    .nav-sections {
-      padding: 56px 40px 72px;
-    }
-
-    .nav-sections-title {
-      font-family: 'Sansation', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--fg);
-      margin-bottom: 32px;
-    }
-
-    .sections-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
-    .section-col {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px 24px;
-      transition: border-color 0.25s, transform 0.2s;
-      animation: fadeUp 0.5s ease both;
-    }
-    .section-col:hover { border-color: var(--teal); transform: translateY(-4px); }
-
-    .section-col:nth-child(1) { animation-delay: 0.05s; }
-    .section-col:nth-child(2) { animation-delay: 0.10s; }
-    .section-col:nth-child(3) { animation-delay: 0.15s; }
-    .section-col:nth-child(4) { animation-delay: 0.20s; }
-    .section-col:nth-child(5) { animation-delay: 0.25s; }
-
-    .section-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .icon-get    { background: rgba(61,123,199,0.15); color: var(--teal); }
-    .icon-part   { background: rgba(253,120,1,0.15); color: var(--orange); }
-    .icon-learn  { background: rgba(254,191,16,0.15); color: #FEBF10; }
-    .icon-net    { background: rgba(121,0,114,0.15); color: #790072; }
-    .icon-conn   { background: rgba(61,123,199,0.15); color: var(--teal); }
-
-    .section-icon svg { width: 18px; height: 18px; }
-
-    .section-heading {
-      font-family: 'Sansation', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.04em;
-      color: var(--fg);
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-links {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .section-links li a {
-      font-size: 0.83rem;
-      color: var(--link-color);
-      text-decoration: none;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 8px;
-      transition: color 0.2s;
-    }
-    .section-links li a:hover { color: var(--link-hover); }
-    .section-links li a .lock {
-      font-size: 0.6rem;
-      line-height: 1.4;
-      color: var(--orange);
-      background: rgba(253,120,1,0.15);
-      padding: 1px 5px;
-      border-radius: 3px;
-      letter-spacing: 0.05em;
-      vertical-align: middle;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--navy2);
-    }
-
-    .footer-copy {
-      font-size: 0.78rem;
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
       color: var(--muted);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .group-label::before {
+      content: '';
+      display: inline-block;
+      width: 3px; height: 14px;
+      background: var(--teal);
+      border-radius: 2px;
     }
 
-    .social-links {
-      display: flex;
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 14px;
     }
 
-    .social-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--social-color);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .social-link:hover { color: var(--teal); }
-    .social-link svg { width: 14px; height: 14px; }
-
-    /* ── LIGHTBOX ── */
-    .lightbox-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-      animation: fadeIn 0.2s ease;
-    }
-    .lightbox-overlay.active {
-      display: flex;
-    }
-    .lightbox-inner {
-      position: relative;
-      width: 90%;
-      max-width: 860px;
-      aspect-ratio: 16/9;
-      background: #000;
+    .file-card {
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      padding: 18px 20px;
+      text-decoration: none;
+      color: var(--navy);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
     }
-    .lightbox-inner iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 2rem;
-      line-height: 1;
-      cursor: pointer;
-      opacity: 0.8;
-      transition: opacity 0.2s;
-    }
-    .lightbox-close:hover { opacity: 1; }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+    .file-card:hover {
+      border-color: var(--teal);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(36,78,158,0.1);
     }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .file-card-top {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 8px;
+      margin-bottom: 4px;
     }
+    .file-tag {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 3px;
+    }
+    .tag-mockup  { background: rgba(36,78,158,0.1);   color: var(--teal); }
+    .tag-dbl     { background: rgba(85,85,85,0.08);   color: #444; }
+    .tag-diff    { background: rgba(253,120,1,0.12);  color: var(--orange); }
+    .tag-legacy  { background: rgba(85,85,85,0.06);   color: #888; }
+
+    .file-name {
+      font-family: 'Sansation', sans-serif;
+      font-size: 0.88rem; font-weight: 700;
+      color: var(--navy); line-height: 1.3;
+    }
+    .file-desc {
+      font-size: 0.78rem; color: var(--muted);
+      line-height: 1.5;
+    }
+    .file-arrow {
+      color: var(--teal);
+      flex-shrink: 0;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .file-card:hover .file-arrow { opacity: 1; }
   </style>
 </head>
 <body>
 
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <div class="logo">
-      <img src="https://www.mplify.net/Assets/Logos/Mplify-Logo-Stacked-white.svg" alt="Mplify" style="height:44px;width:auto;" />
-    </div>
-    <nav>
-      <ul class="topnav">
-        <li><a href="https://members.mplify.net/s/recordlist/Project__c/00BUI00000DWBth2AH?Project__c-filterId=Active_Projects">Projects</a></li>
-        <li><a href="https://www.mplify.net/learn/technical-standards-sdks/">Standards</a></li>
-        <li><a href="https://www.mplify.net/engage/connect/">Connect</a></li>
-        <li><a href="https://members.mplify.net">Help</a></li>
-        <li><a href="https://members.mplify.net/s/login/" class="topnav-login">Login →</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <img src="https://www.mplify.net/Assets/Logos/Mplify-Logo-Stacked-white.svg" alt="Mplify" />
+  <span class="header-title">Mockup Index</span>
+</header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <h1>Welcome to the<br /><a href="https://www.mplify.net/about-mplify/our-members" class="accent" style="text-decoration:none;">Mplify Member</a> Portal</h1>
-      <p class="hero-sub">The Resource Hub for Mplify Members</p>
-      <p class="hero-desc">
-        Welcome to the Mplify Member Portal, your central resource for engaging with the Mplify ecosystem. Access active projects, working group materials, and an expanding library of member resources, including marketing and brand assets. Designed to support collaboration and execution, the Portal brings together the tools and information you need to stay informed, participate in initiatives, and contribute to the work shaping the AI-powered digital economy.
-      </p>
-      <div class="hero-ctas">
-        <a href="https://members.mplify.net/s/login/" class="btn-primary" style="font-family:'Sansation',sans-serif;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-          Login
-        </a>
-        <a href="https://members.mplify.net/s/new-registration" class="btn-teal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          Register
-        </a>
-        <button onclick="openLightbox()" class="btn-ghost">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Registration Tutorial
-        </button>
-      </div>
-    </div>
+<main>
+  <span class="page-eyebrow">Design Review</span>
+  <h1>Portal Mockup Index</h1>
+  <p class="page-sub">HTML prototypes for the Mplify Member Portal homepage. Open any file to preview in the browser.</p>
 
-    <div class="hero-right">
-      <a href="https://members.mplify.net/s/2026-at-a-glance" class="event-card" style="text-decoration:none;">
-        <span class="event-tag tag-workday">Workdays</span>
-        <div class="event-title">Interim Workdays - Online</div>
-        <div class="event-sub">Focusing on Agentic LSO and NaaS for AI</div>
-        <div class="event-date">💻 28–29 April · Online</div>
-      </a>
-      <!--
-      <div class="event-card">
-        <span class="event-tag tag-workday">Workdays</span>
-        <div class="event-title">Member Workdays</div>
-        <div class="event-sub">Co-located with Mplify Member Summit EMEA</div>
-        <div class="event-date">📍 8–9 June · Lisbon, Portugal</div>
-      </div>
-      -->
-      <a href="https://gne.mplify.net/mplify-member-summit-emea/" class="event-card" style="text-decoration:none;">
-        <picture>
-          <!-- source for dark mode commented out with dark mode support -->
-          <!-- <source srcset="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events.png" media="(prefers-color-scheme: dark)" /> -->
-          <img src="https://gne.mplify.net/wp-content/uploads/GNE-Global-NaaS-Events-Blue.svg" alt="Global NaaS Events" style="height:22px;width:auto;object-fit:contain;margin-bottom:2px;display:block;align-self:flex-start;" />
-        </picture>
-        <div class="event-title">Mplify Member Summit EMEA</div>
-        <div class="event-sub">A Global NaaS Event</div>
-        <div class="event-date">📍 9–11 June · Lisbon, Portugal</div>
-      </a>
-      <a href="https://www.mplify.net/wp-content/uploads/Mplify-Member-Summit-EMEA.png" class="event-card" style="text-decoration:none;padding:0;overflow:hidden;">
-        <img src="https://www.mplify.net/wp-content/uploads/Mplify-Member-Summit-EMEA.png" alt="Mplify Member Summit EMEA" style="width:100%;height:100%;object-fit:cover;display:block;" />
-      </a>
-    </div>
-  </section>
+  <!-- WHAT'S NEW — TD (current) -->
+  <div class="group">
+    <div class="group-label">What's New — TD Revisions (current)</div>
+    <div class="file-grid">
 
-  <div class="divider"></div>
-
-  <!-- NAVIGATION SECTIONS -->
-  <section class="nav-sections">
-    <p class="nav-sections-title">Explore the Portal</p>
-    <div class="sections-grid">
-
-      <!-- Get Started -->
-      <div class="section-col">
-        <div class="section-icon icon-get">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 5l7 7-7 7"/></svg>
+      <a href="index-whats-new-guest-TD.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-mockup">Mockup · Guest</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </div>
-        <div class="section-heading">Get Started</div>
-        <ul class="section-links">
-          <li><a href="#">Help Center</a></li>
-          <li><a href="#">Mplify Staff</a></li>
-          <li><a href="https://members.mplify.net/s/brand-center">Mplify Brand Center <span class="lock">Member Only</span></a></li>
-          <li><a href="#">New Member Toolkit <span class="lock">Member Only</span></a></li>
-          <li><a href="#">Marketing Tools <span class="lock">Member Only</span></a></li>
-          <li><a href="https://members.mplify.net/s/certification-logos">Certification Resources <span class="lock">Member Only</span></a></li>
-        </ul>
-      </div>
-
-      <!-- Participate -->
-      <div class="section-col">
-        <div class="section-icon icon-part">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="section-heading">Participate</div>
-        <ul class="section-links">
-          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoKnYAK">Commercial and Business Committee (CBC) <span class="lock">Member Only</span></a></li>
-          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoMPYA0">Digital Services Committee (DSC) <span class="lock">Member Only</span></a></li>
-          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoO1YAK">LSO Committee (LSOC) <span class="lock">Member Only</span></a></li>
-          <li><a href="https://members.mplify.net/s/detail/a2nUI000002UoPdYAK">Test &amp; Certification Committee (TCC) <span class="lock">Member Only</span></a></li>
-          <li><a href="https://members.mplify.net/s/recordlist/Project_Sprint_Ballot__c/00BUI00000E92qX2AR">Active Ballots <span class="lock">Member Only</span></a></li>
-        </ul>
-      </div>
-
-      <!-- Learn -->
-      <div class="section-col">
-        <div class="section-icon icon-learn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        </div>
-        <div class="section-heading">Learn</div>
-        <ul class="section-links">
-          <li><a href="https://infographics.mplify.net">Infographics</a></li>
-          <li><a href="https://lso.mplify.net">LSO Marketplace</a></li>
-          <li><a href="#">Market Research <span class="lock">Member Only</span></a></li>
-          <li><a href="#">Reference Presentations <span class="lock">Member Only</span></a></li>
-          <li><a href="#">Educational Resources <span class="lock">Member Only</span></a></li>
-          <li><a href="#">Marketing Tools <span class="lock">Member Only</span></a></li>
-          <li><a href="https://www.mplify.net">Mplify Website</a></li>
-        </ul>
-      </div>
-
-      <!-- Engage -->
-      <div class="section-col">
-        <div class="section-icon icon-net">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="M12 8v3M7.5 17.5l3-2.5M16.5 17.5l-3-2.5"/></svg>
-        </div>
-        <div class="section-heading">Engage</div>
-        <ul class="section-links">
-          <li><a href="https://gne.mplify.net/member-workdays/">Member Workdays <span class="lock">Member Only</span></a></li>
-          <li><a href="https://gne.mplify.net/mplify-member-summit-emea/">Mplify Member Summit EMEA <span class="lock">Member Only</span></a></li>
-          <li><a href="https://www.mplify.net/engage/connect/industry-events/">Industry Events</a></li>
-          <li><a href="https://share.hsforms.com/1a6YCApwhQwCdESVK8D3JSg4a6lh">Subscribe</a></li>
-          <li>
-            <a href="https://www.linkedin.com/company/3501412/">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              LinkedIn
-            </a>
-          </li>
-          <li>
-            <a href="https://www.youtube.com/@MplifyAlliance">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-              YouTube
-            </a>
-          </li>
-          <li>
-            <a href="https://bsky.app/profile/mplifyalliance.bsky.social">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.299-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
-              Bluesky
-            </a>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-copy">© <span id="yr"></span> Mplify Alliance. All rights reserved. <span style="color:var(--footer-sep);margin:0 8px">|</span> <a href="https://www.mplify.net/privacy-policy/" style="color:var(--muted);text-decoration:none;">Privacy Policy</a></span>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/company/3501412/" class="social-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
+        <div class="file-name">Guest View — TD</div>
+        <div class="file-desc">Homepage as seen by a logged-out visitor. Full-width What's New strip, CFI pinned card, locked ballot row, Explore tab.</div>
       </a>
-      <a href="https://www.youtube.com/@MplifyAlliance" class="social-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        YouTube
-      </a>
-      <a href="https://bsky.app/profile/mplifyalliance.bsky.social" class="social-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.204-.659-.299-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
-        Bluesky
-      </a>
-    </div>
-  </footer>
 
-  <!-- LIGHTBOX -->
-  <div class="lightbox-overlay" id="lightbox" onclick="closeLightboxOnBg(event)">
-    <div class="lightbox-inner">
-      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
-      <iframe id="lightbox-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <a href="index-whats-new-member-TD.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-mockup">Mockup · Member</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Member View — TD</div>
+        <div class="file-desc">Homepage for a logged-in member during ballot week. Ballot banner, ballot spotlight card, full-width What's New, Explore tab.</div>
+      </a>
+
+      <a href="diff-whats-new-guest-TD.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-diff">Diff · Guest</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Guest Diff: DBL → TD</div>
+        <div class="file-desc">16-change log comparing Daniel's guest mockup to the TD revision. Covers layout, dates, lock icons, event cards, explore tab.</div>
+      </a>
+
+      <a href="diff-whats-new-member-TD.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-diff">Diff · Member</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Member Diff: DBL → TD</div>
+        <div class="file-desc">16-change log comparing Daniel's member mockup to the TD revision. Covers highlighted cards, date format, placement, project cards.</div>
+      </a>
+
     </div>
   </div>
 
+  <!-- WHAT'S NEW — DBL -->
+  <div class="group">
+    <div class="group-label">What's New — DBL Revisions (Daniel)</div>
+    <div class="file-grid">
+
+      <a href="index-whats-new-guest - DBL.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-dbl">Mockup · Guest · DBL</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Guest View — DBL</div>
+        <div class="file-desc">Daniel's revision of the guest homepage. Starting point for the TD diff.</div>
+      </a>
+
+      <a href="index-whats-new-member - DBL.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-dbl">Mockup · Member · DBL</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Member View — DBL</div>
+        <div class="file-desc">Daniel's revision of the member homepage. Starting point for the TD diff.</div>
+      </a>
+
+      <a href="diff-whats-new-guest.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-diff">Diff · Guest · DBL</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Guest Diff: v1 → DBL</div>
+        <div class="file-desc">Daniel's change log documenting his revisions to the original guest mockup.</div>
+      </a>
+
+      <a href="diff-whats-new-member.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-diff">Diff · Member · DBL</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Member Diff: v1 → DBL</div>
+        <div class="file-desc">Daniel's change log documenting his revisions to the original member mockup.</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ORIGINAL / LEGACY -->
+  <div class="group">
+    <div class="group-label">Earlier Mockups</div>
+    <div class="file-grid">
+
+      <a href="index-whats-new-guest.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-legacy">Legacy · Guest · v1</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Guest View — v1</div>
+        <div class="file-desc">Original guest homepage prototype before Daniel's or Tom's revisions.</div>
+      </a>
+
+      <a href="index-whats-new-member.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-legacy">Legacy · Member · v1</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Member View — v1</div>
+        <div class="file-desc">Original member homepage prototype before Daniel's or Tom's revisions.</div>
+      </a>
+
+      <a href="index-pre-login.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-legacy">Legacy · Pre-login</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Pre-login Page</div>
+        <div class="file-desc">Earlier landing page mockup before the What's New strip work began.</div>
+      </a>
+
+      <a href="index-post-login.html" class="file-card">
+        <div class="file-card-top">
+          <span class="file-tag tag-legacy">Legacy · Post-login</span>
+          <svg class="file-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="file-name">Post-login Page</div>
+        <div class="file-desc">Earlier logged-in homepage mockup before the What's New strip work began.</div>
+      </a>
+
+    </div>
+  </div>
+
+</main>
+
 </body>
-<script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
-
-  function openLightbox() {
-    document.getElementById('lightbox-iframe').src = 'https://www.youtube.com/embed/-oR-xB1meSQ?autoplay=1';
-    document.getElementById('lightbox').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('active');
-    document.getElementById('lightbox-iframe').src = '';
-    document.body.style.overflow = '';
-  }
-
-  function closeLightboxOnBg(e) {
-    if (e.target === document.getElementById('lightbox')) closeLightbox();
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox();
-  });
-</script>
 </html>
