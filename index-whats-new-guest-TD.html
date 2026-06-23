@@ -260,7 +260,7 @@
     .news-date { font-size: 0.68rem; color: var(--mp-muted); margin-top: auto; padding-top: 6px; }
 
     /* ── Nav sections (mplifyNavSections.css) ── */
-    .nav-sections { padding: 112px 40px 72px; background: transparent; }
+    .nav-sections { padding: 40px 40px 72px; background: transparent; }
     .nav-sections-title {
       font-family: 'Sansation', sans-serif; font-size: 16px; font-weight: 700;
       letter-spacing: 0.16em; text-transform: uppercase;
@@ -325,6 +325,25 @@
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── Explore tab ── */
+    #explore-tab {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(12px);
+      background: var(--mp-teal); color: #fff;
+      font-family: 'Sansation', sans-serif; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 9px 20px 9px 16px; border-radius: 24px;
+      display: flex; align-items: center; gap: 8px;
+      cursor: pointer; border: none;
+      box-shadow: 0 4px 16px rgba(36,78,158,0.35);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 200;
+    }
+    #explore-tab.visible {
+      opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0);
+    }
+    #explore-tab svg { flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -660,6 +679,11 @@
     </div>
   </footer>
 
+<button id="explore-tab" aria-label="Jump to Explore the Portal">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  Explore the Portal
+</button>
+
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
@@ -669,7 +693,7 @@
     if (!scroll) return;
     const limit = scroll.getBoundingClientRect().right;
     scroll.querySelectorAll('.news-card').forEach(c => {
-      c.style.display = '';                                    // reset first
+      c.style.display = '';
       if (c.getBoundingClientRect().right > limit + 1) {
         c.style.display = 'none';
       }
@@ -677,6 +701,17 @@
   }
   requestAnimationFrame(clipNewsCards);
   window.addEventListener('resize', clipNewsCards);
+
+  // Show sticky "Explore the Portal" tab when nav-sections is below the fold
+  const exploreTab = document.getElementById('explore-tab');
+  const navSections = document.querySelector('.nav-sections');
+  const observer = new IntersectionObserver(([entry]) => {
+    exploreTab.classList.toggle('visible', !entry.isIntersecting);
+  }, { threshold: 0 });
+  observer.observe(navSections);
+  exploreTab.addEventListener('click', () => {
+    navSections.scrollIntoView({ behavior: 'smooth' });
+  });
 </script>
 </body>
 </html>

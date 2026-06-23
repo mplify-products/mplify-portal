@@ -54,7 +54,6 @@
     .dot-removed { background: var(--removed-border); }
     .dot-added   { background: var(--added-border); }
 
-    /* Table */
     .table-wrap {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 14px; overflow: hidden;
@@ -67,12 +66,11 @@
       text-transform: uppercase; color: rgba(255,255,255,0.85);
       padding: 14px 20px; text-align: left;
     }
-    thead th:nth-child(1) { width: 14%; }
-    thead th:nth-child(2) { width: 14%; }
-    thead th:nth-child(3) { width: 36%; }
-    thead th:nth-child(4) { width: 36%; }
+    thead th:nth-child(1) { width: 5%; }
+    thead th:nth-child(2) { width: 18%; }
+    thead th:nth-child(3) { width: 38%; }
+    thead th:nth-child(4) { width: 38%; }
 
-    /* Section header rows */
     tr.section-row td {
       background: var(--neutral-bg);
       font-family: 'Sansation', sans-serif;
@@ -83,7 +81,6 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* Data rows */
     tbody tr.data-row td {
       padding: 14px 20px;
       font-size: 0.82rem;
@@ -110,7 +107,6 @@
       padding: 1px 4px; border-radius: 3px;
     }
 
-    /* NEW / REMOVED badges */
     .badge {
       display: inline-block;
       font-family: 'Sansation', sans-serif;
@@ -123,10 +119,7 @@
     .badge-removed  { background: rgba(216,79,48,0.15);  color: #7a2a1a; }
     .badge-changed  { background: rgba(36,78,158,0.12);  color: var(--teal); }
 
-    .na { color: var(--muted); font-style: italic; font-size: 0.78rem; }
-
-    /* Summary bar */
-    .summary { display: flex; gap: 20px; margin-bottom: 24px; }
+    .summary { display: flex; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
     .stat {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 8px; padding: 12px 20px;
@@ -152,7 +145,7 @@
 <header>
   <span class="doc-label">Change Log</span>
   <h1>index-whats-new-guest DBL → TD</h1>
-  <p class="subtitle">TD refinements applied on top of Daniel's DBL revision — prepared for review</p>
+  <p class="subtitle">All TD refinements applied on top of Daniel's DBL file — direct comparison</p>
   <div class="files-row">
     <div class="file-pill"><span class="dot dot-removed"></span>index-whats-new-guest - DBL.html &nbsp;(Daniel)</div>
     <div class="file-pill"><span class="dot dot-added"></span>index-whats-new-guest-TD.html &nbsp;(Tom)</div>
@@ -160,10 +153,10 @@
 </header>
 
 <div class="summary">
-  <div class="stat"><span class="stat-num teal">8</span><span class="stat-label">Total changes</span></div>
-  <div class="stat"><span class="stat-num green">1</span><span class="stat-label">New elements added</span></div>
-  <div class="stat"><span class="stat-num orange">7</span><span class="stat-label">Existing elements changed</span></div>
-  <div class="stat"><span class="stat-num red">0</span><span class="stat-label">Elements removed</span></div>
+  <div class="stat"><span class="stat-num teal">15</span><span class="stat-label">Total changes</span></div>
+  <div class="stat"><span class="stat-num green">4</span><span class="stat-label">New elements added</span></div>
+  <div class="stat"><span class="stat-num orange">10</span><span class="stat-label">Existing elements changed</span></div>
+  <div class="stat"><span class="stat-num red">1</span><span class="stat-label">Elements removed</span></div>
 </div>
 
 <div class="table-wrap">
@@ -185,27 +178,24 @@
       <td class="col-num">1</td>
       <td class="col-area">Pinned card treatment</td>
       <td class="col-before"><span class="badge badge-changed">Changed</span><br>Subtle left accent only: <code>border-left: 3px solid var(--mp-teal)</code> — visually indistinguishable from other cards at a glance</td>
-      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Explicit promotion: teal-tinted background <code>rgba(36,78,158,0.06)</code>, stronger border <code>rgba(36,78,158,0.35)</code>, and <code>box-shadow: inset 4px 0 0 var(--mp-teal)</code> — left accent now rendered via inset shadow to avoid border-radius corner artifact</td>
-    </tr>
-
-    <!-- DATE ALIGNMENT -->
-    <tr class="section-row"><td colspan="4">What's New — Card Date Alignment</td></tr>
-
-    <tr class="data-row">
-      <td class="col-num">2</td>
-      <td class="col-area">Date position in card</td>
-      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.news-date { margin-top: 1px; }</code> — date sits directly below the title, creating uneven heights across cards</td>
-      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>.news-date { margin-top: auto; padding-top: 6px; }</code> — date always pinned to the bottom of each card regardless of title length</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Explicit promotion: teal-tinted background <code>rgba(36,78,158,0.06)</code>, stronger border <code>rgba(36,78,158,0.35)</code>, and <code>box-shadow: inset 4px 0 0 var(--mp-teal)</code> — inset shadow avoids the border-radius corner artifact that a <code>border-left</code> of differing width causes</td>
     </tr>
 
     <!-- DATE FORMAT -->
     <tr class="section-row"><td colspan="4">What's New — Date Format</td></tr>
 
     <tr class="data-row">
-      <td class="col-num">3</td>
+      <td class="col-num">2</td>
       <td class="col-area">Full date format</td>
-      <td class="col-before"><span class="badge badge-changed">Changed</span><br>US format: <code>Jun 17, 2026</code> / <code>Jun 3, 2026</code> / <code>May 28, 2026</code> etc.</td>
-      <td class="col-after"><span class="badge badge-changed">Changed</span><br>International format: <code>17 Jun 2026</code> / <code>3 Jun 2026</code> / <code>28 May 2026</code> etc. — day-first, no comma, matches Mplify's international audience</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>US format throughout: <code>Jun 17, 2026</code> / <code>Jun 3, 2026</code> / <code>May 28, 2026</code> / <code>May 20, 2026</code> / <code>May 14, 2026</code></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>International format throughout: <code>17 Jun 2026</code> / <code>3 Jun 2026</code> / <code>28 May 2026</code> / <code>20 May 2026</code> / <code>14 May 2026</code> — day-first, no comma. Mplify Alliance is international; in LWC this will use <code>Intl.DateTimeFormat</code> with <code>en-GB</code> locale</td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">3</td>
+      <td class="col-area">CFI card dates</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Both Call for Interest cards show <code>Jun 2026</code> — no day, approximate</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Both CFI cards set to <code>22 Jun 2026</code> — consistent with actual submission date used in the org simulation</td>
     </tr>
 
     <!-- CARD ORDER -->
@@ -213,46 +203,114 @@
 
     <tr class="data-row">
       <td class="col-num">4</td>
-      <td class="col-area">Card 4 &amp; 5 order</td>
-      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Card 4: 🎙 Podcast — Deterministic Networks (May 28)<br>Card 5: 📣 Call for Interest — Standardized ESG (Jun 2026)</td>
-      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Card 4: 📣 Call for Interest — Standardized ESG (Jun 2026)<br>Card 5: 🎙 Podcast — Deterministic Networks (28 May 2026)<br><em>Swapped to maintain newest-first ordering</em></td>
+      <td class="col-area">Row 1 ordering</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Order: Pinned CFI (Jun) → Report (Jun 17) → Blog (Jun 3) → Podcast (May 28) → <strong>CFI ESG (Jun)</strong> → Blog (May 20) → Podcast (May 14) — CFI ESG appears after items with an older date</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Order: Pinned CFI (22 Jun) → <strong>CFI ESG (22 Jun)</strong> → Report (17 Jun) → Blog (3 Jun) → Podcast (28 May) → Blog (20 May) → Podcast (14 May) — strictly newest-first; CFI ESG promoted to slot 2 matching its 22 Jun date</td>
     </tr>
 
-    <!-- LOCK ICON ALIGNMENT -->
+    <!-- LOCK ICONS -->
     <tr class="section-row"><td colspan="4">What's New — Row 2 Ballot Card Lock Icons</td></tr>
 
     <tr class="data-row">
       <td class="col-num">5</td>
       <td class="col-area">Lock icon layout</td>
-      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Lock SVG positioned absolutely: <code>position:absolute; top:5px; right:6px</code> — icon floats at a fixed pixel offset, misaligned with the badge on taller/shorter badge text</td>
-      <td class="col-after"><span class="badge badge-changed">Changed</span><br>New <code>.news-card-header</code> flex row wraps badge + lock icon side-by-side: <code>display:flex; align-items:center; justify-content:space-between</code> — lock always vertically centred with the badge regardless of text length</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Lock SVG absolutely positioned: <code>position:absolute; top:5px; right:6px</code> on each card, with <code>style="position:relative"</code> on the card — icon floats at a fixed pixel offset, misaligns when badge text wraps</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>New <code>.news-card-header</code> flex row wraps badge + lock SVG side-by-side: <code>display:flex; align-items:center; justify-content:space-between</code> — lock is always vertically centred with the badge regardless of badge text length</td>
     </tr>
 
     <tr class="data-row">
       <td class="col-num">6</td>
-      <td class="col-area">Card position style</td>
-      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Each ballot card requires <code>style="position:relative"</code> inline attribute to anchor the absolute-positioned lock</td>
-      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>position:relative</code> inline style removed from all 5 ballot cards — no longer needed with the flex header approach</td>
+      <td class="col-area">Card <code>position:relative</code></td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>Each of the 5 ballot cards in row 2 has <code>style="position:relative"</code> inline to anchor the absolute-positioned lock</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>position:relative</code> inline style removed from all ballot cards — no longer needed with the flex header approach</td>
     </tr>
 
-    <!-- GNE LOGO -->
-    <tr class="section-row"><td colspan="4">Right Column — Event Card Logo</td></tr>
+    <!-- NaaS CAPITALISATION -->
+    <tr class="section-row"><td colspan="4">What's New — NaaS for AI Badge</td></tr>
 
     <tr class="data-row">
       <td class="col-num">7</td>
-      <td class="col-area">GNE logo alignment</td>
-      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.card-logo</code> renders centred inside the flex-column event card due to default <code>align-items: stretch</code> behaviour on the image element</td>
-      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Added <code>align-self: flex-start</code> to <code>.card-logo</code> — logo left-justifies to match the text and tag above it</td>
+      <td class="col-area">NaaS capitalisation</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>text-transform: uppercase</code> on <code>.news-type</code> renders the badge as "NAAS FOR AI" — incorrect; the standard abbreviation requires lowercase aa</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>style="text-transform:none;"</code> inline override on the NaaS for AI badge only — renders "NaaS for AI" exactly as intended while all other badges remain uppercase</td>
     </tr>
 
-    <!-- SCROLL PADDING -->
-    <tr class="section-row"><td colspan="4">What's New — Scroll Container</td></tr>
+    <!-- RIGHT COLUMN EVENT CARDS -->
+    <tr class="section-row"><td colspan="4">Right Column — Event Cards</td></tr>
 
     <tr class="data-row">
       <td class="col-num">8</td>
-      <td class="col-area">Strip container padding</td>
-      <td class="col-before"><span class="badge badge-removed">Not present</span><br><code>.whats-new-scroll</code> has no padding — <code>overflow:hidden</code> clips at the exact container edge</td>
-      <td class="col-after"><span class="badge badge-new">Added</span><br><code>padding: 2px 0 2px 2px</code> added to <code>.whats-new-scroll</code> — provides breathing room so the first card's border-radius is not clipped by the overflow boundary</td>
+      <td class="col-area">APAC Workshop card logo</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>&lt;span class="event-tag tag-report"&gt;Workshop&lt;/span&gt;</code> — text tag, mismatched colour (purple report style)</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>&lt;img src="…GNE-Global-NaaS-Events-Blue.svg"…&gt;</code> — GNE logo image, matching the Member Summit Americas card treatment</td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">9</td>
+      <td class="col-area">GNE logo alignment</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.card-logo</code> has no <code>align-self</code> — default <code>align-items: stretch</code> on the flex-column card centres the image horizontally</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>align-self: flex-start</code> added to <code>.card-logo</code> — logo left-justifies to match the text and tags above it</td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">10</td>
+      <td class="col-area">Event card height / fill</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>flex: 1</code> on both <code>.events-wrap</code> and <code>.event-card</code> — cards stretch to fill the full column height; content floats in the middle of tall cards with <code>justify-content: center</code></td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>flex: 1</code> removed from both; <code>justify-content</code> changed to <code>flex-start</code> — cards sit at natural content height at the top of the column, no stretching</td>
+    </tr>
+
+    <!-- HERO CTAs -->
+    <tr class="section-row"><td colspan="4">Hero — CTA Button Row</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">11</td>
+      <td class="col-area">CTA button wrapping</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.hero-ctas { flex-wrap: wrap; }</code> — the 4th button (Member Projects) wraps to a second line at typical viewport widths</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>.hero-ctas { flex-wrap: nowrap; max-width: none; }</code> — all 4 buttons stay on one row; the row is permitted to extend into the centre grid area if needed</td>
+    </tr>
+
+    <!-- WHAT'S NEW PLACEMENT -->
+    <tr class="section-row"><td colspan="4">What's New — Layout Placement</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">12</td>
+      <td class="col-area">Strip location</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br>What's New sits inside <code>.hero</code> (left column) as <code>.whats-new-inset</code> — constrained to ~66% of the page width; hero uses <code>flex-direction: column</code> + <code>flex: 1</code> to push the strip to the bottom of the left column</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br>Moved to <code>&lt;div class="whats-new-full"&gt;</code> placed after <code>&lt;/div&gt;&lt;!-- end hero-row --&gt;</code> — spans the full page width (both columns) with <code>padding: 0 40px 28px</code>. Hero CSS simplified; no flex-column fill needed</td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">13</td>
+      <td class="col-area">Scroll container padding</td>
+      <td class="col-before"><span class="badge badge-removed">Not present</span><br><code>.whats-new-scroll</code> has no padding — <code>overflow:hidden</code> clips at the exact container edge, cutting off the first card's border-radius shadow</td>
+      <td class="col-after"><span class="badge badge-new">Added</span><br><code>padding: 2px 0 2px 2px</code> on <code>.whats-new-scroll</code> — gives breathing room so the first card's rounded corner and inset shadow are not clipped</td>
+    </tr>
+
+    <!-- ROW 2 NEW CARDS -->
+    <tr class="section-row"><td colspan="4">What's New — Row 2 Additional Project Cards</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">14</td>
+      <td class="col-area">Row 2 project cards</td>
+      <td class="col-before"><span class="badge badge-removed">Not present</span><br>Row 2 contains only 5 ballot cards (NaaS for AI, Carrier Ethernet, SD-WAN, Quantum Safe, Agentic LSO)</td>
+      <td class="col-after"><span class="badge badge-new">Added</span><br>3 additional active-project cards appended: <strong>SASE</strong> (Policy Management Agentic LSO Use Case), <strong>Cross-Connect</strong> (Product Attributes Mplify W176), <strong>Federation</strong> (Federated Private Network Framework — Instant L2 Connectivity) — all styled <code>type-ballot</code> orange to match the ballot row aesthetic; lock icons present (guest view)</td>
+    </tr>
+
+    <!-- NAV SECTIONS & EXPLORE TAB -->
+    <tr class="section-row"><td colspan="4">Navigation — Explore the Portal</td></tr>
+
+    <tr class="data-row">
+      <td class="col-num">15</td>
+      <td class="col-area">Nav-sections top padding</td>
+      <td class="col-before"><span class="badge badge-changed">Changed</span><br><code>.nav-sections { padding: 112px 40px 72px; }</code> — large gap between the What's New strip and the Explore the Portal heading</td>
+      <td class="col-after"><span class="badge badge-changed">Changed</span><br><code>.nav-sections { padding: 40px 40px 72px; }</code> — tightened; adequate visual separation without wasted space</td>
+    </tr>
+
+    <tr class="data-row">
+      <td class="col-num">16</td>
+      <td class="col-area">Explore the Portal tab</td>
+      <td class="col-before"><span class="badge badge-removed">Not present</span><br>No mechanism to prompt users to scroll down to the Explore the Portal section when it is off-screen</td>
+      <td class="col-after"><span class="badge badge-new">Added</span><br>Fixed pill button <code>#explore-tab</code> (teal, centred at bottom of viewport) appears via CSS transition when <code>.nav-sections</code> is not intersecting the viewport — detected by <code>IntersectionObserver</code>. Clicking smooth-scrolls to the section. Hides automatically when section scrolls into view</td>
     </tr>
 
   </tbody>
@@ -260,7 +318,7 @@
 </div>
 
 <footer>
-  Generated by Claude · index-whats-new-guest - DBL.html vs index-whats-new-guest-TD.html · June 2026
+  Generated by Claude · index-whats-new-guest - DBL.html vs index-whats-new-guest-TD.html · 22 Jun 2026
 </footer>
 
 </body>
