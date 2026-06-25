@@ -694,14 +694,15 @@
 
   // Hide any news card whose right edge falls outside the strip container
   function clipNewsCards() {
-    const scroll = document.querySelector('.whats-new-scroll');
-    if (!scroll) return;
-    const limit = scroll.getBoundingClientRect().right;
-    scroll.querySelectorAll('.news-card').forEach(c => {
-      c.style.display = '';
-      if (c.getBoundingClientRect().right > limit + 1) {
-        c.style.display = 'none';
-      }
+    document.querySelectorAll('.whats-new-scroll').forEach(scroll => {
+      if (!scroll) return;
+      const limit = scroll.getBoundingClientRect().right;
+      scroll.querySelectorAll('.news-card').forEach(c => {
+        c.style.display = '';
+        if (c.getBoundingClientRect().right > limit + 1) {
+          c.style.display = 'none';
+        }
+      });
     });
   }
   requestAnimationFrame(clipNewsCards);
